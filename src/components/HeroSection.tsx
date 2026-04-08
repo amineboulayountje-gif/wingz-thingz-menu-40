@@ -32,9 +32,16 @@ const HeroSection = () => {
           style={{ animation: "float 4s ease-in-out infinite" }}
         />
 
-        <div
-          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4 mb-6 md:mb-8"
+        <h2
+          className="text-2xl sm:text-3xl md:text-4xl font-display text-gradient mb-3 md:mb-4"
           style={{ animation: "slide-up 0.8s ease-out 0.3s both" }}
+        >
+          Ons Menu
+        </h2>
+
+        <div
+          className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 md:gap-4"
+          style={{ animation: "slide-up 0.8s ease-out 0.5s both" }}
         >
           {[
             { label: "Wings & Lamb Chops", href: "#menu" },
@@ -50,15 +57,6 @@ const HeroSection = () => {
             </a>
           ))}
         </div>
-
-        <a
-          href="#menu"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm font-body"
-          style={{ animation: "fade-in 1s ease-out 0.8s both" }}
-        >
-          Bekijk het menu
-          <ChevronDown size={16} className="animate-bounce" />
-        </a>
       </div>
 
       {/* Bottom fade */}
