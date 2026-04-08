@@ -16,7 +16,7 @@ const HeroSection = () => {
           className="mx-auto h-40 md:h-56 w-auto mb-4 drop-shadow-2xl"
         />
         <p className="text-lg md:text-xl font-body tracking-wide font-semibold text-primary-foreground/90 drop-shadow">
-          Wings • Lamskoteletten • Bijgerechten • Dranken
+          Wings • Lamb Chops • Bijgerechten • Dranken
         </p>
       </div>
     </section>

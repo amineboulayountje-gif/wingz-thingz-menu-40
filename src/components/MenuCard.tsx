@@ -59,7 +59,7 @@ export const MenuSection = () => {
       included: "Wings + 2 Bijgerechten + 1 Drankje",
     },
     {
-      title: "Lamskoteletten",
+      title: "Lamb Chops",
       description: "Sappige, perfect gekruide lamskoteletten op de grill bereid.",
       icon: <Drumstick size={20} />,
       accentColor: "hsl(15, 40%, 45%)",

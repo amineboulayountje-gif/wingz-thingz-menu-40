@@ -6,7 +6,7 @@ const SidesAndDrinks = () => {
     "Coleslaw",
     "Mac & Cheese",
     "Buttercorn on the Cob",
-    "Aardappelgratin",
+    "Cheesy Gratin",
   ];
 
   const drinks = [
