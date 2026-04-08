@@ -1,28 +1,21 @@
-import heroImg from "@/assets/hero-wings.jpg";
 import logo from "@/assets/logo.png";
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-      <img
-        src={heroImg}
-        alt="Delicious wings"
-        className="absolute inset-0 w-full h-full object-cover"
-        width={1920}
-        height={800}
-      />
-      <div
-        className="absolute inset-0"
-        style={{ background: "var(--hero-gradient)" }}
-      />
-      <div className="absolute inset-0 bg-background/40" />
+    <section
+      className="relative min-h-[400px] flex items-center justify-center overflow-hidden py-16"
+      style={{
+        background:
+          "linear-gradient(160deg, hsl(45, 70%, 55%) 0%, hsl(160, 35%, 40%) 50%, hsl(10, 65%, 45%) 100%)",
+      }}
+    >
       <div className="relative z-10 text-center px-4">
         <img
           src={logo}
           alt="Wingz and Thingz"
-          className="mx-auto h-32 md:h-44 w-auto mb-4"
+          className="mx-auto h-40 md:h-56 w-auto mb-4 drop-shadow-2xl"
         />
-        <p className="text-lg md:text-xl text-foreground/80 font-body tracking-wide">
+        <p className="text-lg md:text-xl font-body tracking-wide font-semibold text-primary-foreground/90 drop-shadow">
           Wings • Lamb Chops • Sides • Drinks
         </p>
       </div>
