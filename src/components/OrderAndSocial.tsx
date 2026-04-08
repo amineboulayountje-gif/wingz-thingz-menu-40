@@ -40,7 +40,7 @@ const OrderAndSocial = () => {
             className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-primary-foreground font-semibold text-lg px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
           >
             <MessageCircle size={24} />
-            Order via WhatsApp
+            Bestel via WhatsApp
           </a>
         </div>
 
