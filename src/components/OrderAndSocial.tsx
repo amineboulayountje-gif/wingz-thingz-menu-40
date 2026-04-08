@@ -21,7 +21,7 @@ const InstagramIcon = () => (
 const OrderAndSocial = () => {
   const whatsappNumber = "1234567890"; // Replace with actual number
   const orderMessage = encodeURIComponent(
-    "Hi! I'd like to place an order from Wingz and Thingz 🍗"
+    "Hoi! Ik wil graag een bestelling plaatsen bij Wingz and Thingz 🍗"
   );
 
   return (
