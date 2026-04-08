@@ -21,7 +21,7 @@ const InstagramIcon = () => (
 const OrderAndSocial = () => {
   const whatsappNumber = "1234567890"; // Replace with actual number
   const orderMessage = encodeURIComponent(
-    "Hi! I'd like to place an order from Wingz and Thingz 🍗"
+    "Hoi! Ik wil graag een bestelling plaatsen bij Wingz and Thingz 🍗"
   );
 
   return (
@@ -30,7 +30,7 @@ const OrderAndSocial = () => {
         {/* Order Button */}
         <div>
           <h2 className="text-3xl md:text-4xl font-display mb-4 text-gradient">
-            Ready to Order?
+            Klaar om te bestellen?
           </h2>
           <a
             href={`https://wa.me/${whatsappNumber}?text=${orderMessage}`}
@@ -39,13 +39,13 @@ const OrderAndSocial = () => {
             className="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20bd5a] text-primary-foreground font-semibold text-lg px-8 py-4 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
           >
             <MessageCircle size={24} />
-            Order via WhatsApp
+            Bestel via WhatsApp
           </a>
         </div>
 
         {/* Social Links */}
         <div>
-          <p className="text-muted-foreground text-sm mb-4">Follow us</p>
+          <p className="text-muted-foreground text-sm mb-4">Volg ons</p>
           <div className="flex items-center justify-center gap-5">
             <a
               href="https://snapchat.com"
@@ -79,7 +79,7 @@ const OrderAndSocial = () => {
 
         {/* Footer */}
         <p className="text-muted-foreground text-xs pt-8 border-t border-border">
-          © 2026 Wingz and Thingz. All rights reserved.
+          © 2026 Wingz and Thingz. Alle rechten voorbehouden.
         </p>
       </div>
     </section>
