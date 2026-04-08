@@ -46,7 +46,7 @@ const OrderAndSocial = () => {
 
         {/* Social Links */}
         <div>
-          <p className="text-muted-foreground text-sm mb-4">Follow us</p>
+          <p className="text-muted-foreground text-sm mb-4">Volg ons</p>
           <div className="flex items-center justify-center gap-5">
             <a
               href="https://snapchat.com"
