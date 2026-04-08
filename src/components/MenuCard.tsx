@@ -39,31 +39,31 @@ export const MenuSection = () => {
   const menus = [
     {
       title: "Classic Wings",
-      description: "Golden crispy wings tossed in our signature classic seasoning. A timeless favorite.",
+      description: "Gouden krokante wings met onze kenmerkende klassieke kruiden. Een tijdloze favoriet.",
       icon: <Drumstick size={20} />,
       accentColor: "hsl(30, 95%, 55%)",
-      included: "Wings + 2 Sides + 1 Drink",
+      included: "Wings + 2 Bijgerechten + 1 Drankje",
     },
     {
       title: "Honey Wings",
-      description: "Sweet and sticky honey-glazed wings with a perfect caramelized finish.",
+      description: "Zoete en plakkerige honing-geglazuurde wings met een perfect gekaramelliseerde afwerking.",
       icon: <Droplets size={20} />,
       accentColor: "hsl(45, 95%, 50%)",
-      included: "Wings + 2 Sides + 1 Drink",
+      included: "Wings + 2 Bijgerechten + 1 Drankje",
     },
     {
       title: "Spicy Wings",
-      description: "Fiery hot wings packed with bold spices. Not for the faint-hearted! 🔥",
+      description: "Vurig pittige wings vol stoere kruiden. Niet voor doetjes! 🔥",
       icon: <Flame size={20} />,
       accentColor: "hsl(0, 80%, 50%)",
-      included: "Wings + 2 Sides + 1 Drink",
+      included: "Wings + 2 Bijgerechten + 1 Drankje",
     },
     {
-      title: "Lamb Chops",
-      description: "Juicy, perfectly seasoned lamb chops grilled to perfection.",
+      title: "Lamskoteletten",
+      description: "Sappige, perfect gekruide lamskoteletten op de grill bereid.",
       icon: <Drumstick size={20} />,
       accentColor: "hsl(15, 40%, 45%)",
-      included: "Lamb Chops + 2 Sides + 1 Drink",
+      included: "Lamskoteletten + 2 Bijgerechten + 1 Drankje",
     },
   ];
 
