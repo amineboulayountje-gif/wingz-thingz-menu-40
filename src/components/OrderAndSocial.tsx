@@ -32,7 +32,6 @@ const OrderAndSocial = () => {
           <h2 className="text-3xl md:text-4xl font-display mb-4 text-gradient">
             Klaar om te bestellen?
           </h2>
-          </h2>
           <a
             href={`https://wa.me/${whatsappNumber}?text=${orderMessage}`}
             target="_blank"

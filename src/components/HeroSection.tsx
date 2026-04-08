@@ -18,7 +18,6 @@ const HeroSection = () => {
         <p className="text-lg md:text-xl font-body tracking-wide font-semibold text-primary-foreground/90 drop-shadow">
           Wings • Lamskoteletten • Bijgerechten • Dranken
         </p>
-        </p>
       </div>
     </section>
   );
