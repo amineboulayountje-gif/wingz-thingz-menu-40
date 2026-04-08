@@ -2,18 +2,18 @@ import { UtensilsCrossed, GlassWater } from "lucide-react";
 
 const SidesAndDrinks = () => {
   const sides = [
-    "Fries",
+    "Seasoned Potatoes",
     "Coleslaw",
     "Mac & Cheese",
-    "Corn on the Cob",
-    "Rice & Beans",
+    "Buttercorn on the Cob",
+    "Aardappelgratin",
   ];
 
   const drinks = [
-    "Coca-Cola",
-    "Sprite",
-    "Lemonade",
-    "Iced Tea",
+    "Cola",
+    "Fanta",
+    "Ice Tea",
+    "Ice Tea Green",
     "Water",
   ];
 
