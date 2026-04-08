@@ -27,9 +27,9 @@ const SidesAndDrinks = () => {
               <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
                 <UtensilsCrossed size={20} />
               </div>
-              <h2 className="text-3xl md:text-4xl font-display">Sides</h2>
+              <h2 className="text-3xl md:text-4xl font-display">Bijgerechten</h2>
             </div>
-            <p className="text-muted-foreground text-sm mb-4">Choose 2 with any menu</p>
+            <p className="text-muted-foreground text-sm mb-4">Kies er 2 bij elk menu</p>
             <ul className="space-y-3">
               {sides.map((side) => (
                 <li
