@@ -80,7 +80,7 @@ const OrderAndSocial = () => {
 
         {/* Footer */}
         <p className="text-muted-foreground text-xs pt-8 border-t border-border">
-          © 2026 Wingz and Thingz. All rights reserved.
+          © 2026 Wingz and Thingz. Alle rechten voorbehouden.
         </p>
       </div>
     </section>

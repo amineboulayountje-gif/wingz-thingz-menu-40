@@ -71,10 +71,10 @@ export const MenuSection = () => {
     <section className="py-16 px-4">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-display text-center mb-2 text-gradient">
-          Our Menus
+          Ons Menu
         </h2>
         <p className="text-center text-muted-foreground mb-10">
-          Pick your protein — each combo comes with 2 sides & a drink
+          Kies je eiwit — elke combo komt met 2 bijgerechten & een drankje
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {menus.map((menu) => (
