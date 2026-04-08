@@ -1,24 +1,63 @@
 import logo from "@/assets/logo.png";
+import { ChevronDown } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section
-      className="relative min-h-[400px] flex items-center justify-center overflow-hidden py-16"
-      style={{
-        background:
-          "linear-gradient(160deg, hsl(45, 70%, 55%) 0%, hsl(160, 35%, 40%) 50%, hsl(10, 65%, 45%) 100%)",
-      }}
-    >
-      <div className="relative z-10 text-center px-4">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
+      {/* Layered background */}
+      <div className="absolute inset-0 bg-background" />
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 20% 50%, hsl(30, 95%, 55%) 0%, transparent 50%), radial-gradient(circle at 80% 30%, hsl(45, 95%, 50%) 0%, transparent 40%), radial-gradient(circle at 60% 80%, hsl(10, 65%, 45%) 0%, transparent 45%)",
+        }}
+      />
+      {/* Subtle grid pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(30, 95%, 55%) 1px, transparent 1px), linear-gradient(90deg, hsl(30, 95%, 55%) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 text-center px-6 flex flex-col items-center">
         <img
           src={logo}
           alt="Wingz and Thingz"
-          className="mx-auto h-40 md:h-56 w-auto mb-4 drop-shadow-2xl"
+          className="h-44 md:h-64 w-auto mb-6 drop-shadow-2xl"
+          style={{ animation: "float 4s ease-in-out infinite" }}
         />
-        <p className="text-lg md:text-xl font-body tracking-wide font-semibold text-primary-foreground/90 drop-shadow">
-          Wings • Lamb Chops • Bijgerechten • Dranken
-        </p>
+
+        <div
+          className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-8"
+          style={{ animation: "slide-up 0.8s ease-out 0.3s both" }}
+        >
+          {["Wings", "Lamb Chops", "Bijgerechten", "Dranken"].map((item, i) => (
+            <span
+              key={item}
+              className="px-4 py-1.5 rounded-full text-sm md:text-base font-semibold font-body border border-primary/30 bg-primary/10 text-primary backdrop-blur-sm"
+            >
+              {item}
+            </span>
+          ))}
+        </div>
+
+        <a
+          href="#menu"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm font-body"
+          style={{ animation: "fade-in 1s ease-out 0.8s both" }}
+        >
+          Bekijk het menu
+          <ChevronDown size={16} className="animate-bounce" />
+        </a>
       </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
