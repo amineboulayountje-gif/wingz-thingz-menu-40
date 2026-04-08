@@ -1,0 +1,73 @@
+import { UtensilsCrossed, GlassWater } from "lucide-react";
+
+const SidesAndDrinks = () => {
+  const sides = [
+    "Fries",
+    "Coleslaw",
+    "Mac & Cheese",
+    "Corn on the Cob",
+    "Rice & Beans",
+  ];
+
+  const drinks = [
+    "Coca-Cola",
+    "Sprite",
+    "Lemonade",
+    "Iced Tea",
+    "Water",
+  ];
+
+  return (
+    <section className="py-16 px-4 bg-secondary/30">
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {/* Sides */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+                <UtensilsCrossed size={20} />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display">Sides</h2>
+            </div>
+            <p className="text-muted-foreground text-sm mb-4">Choose 2 with any menu</p>
+            <ul className="space-y-3">
+              {sides.map((side) => (
+                <li
+                  key={side}
+                  className="flex items-center gap-3 bg-card border border-border rounded-md px-4 py-3 text-foreground font-body"
+                >
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  {side}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Drinks */}
+          <div>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
+                <GlassWater size={20} />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-display">Drinks</h2>
+            </div>
+            <p className="text-muted-foreground text-sm mb-4">Choose 1 with any menu</p>
+            <ul className="space-y-3">
+              {drinks.map((drink) => (
+                <li
+                  key={drink}
+                  className="flex items-center gap-3 bg-card border border-border rounded-md px-4 py-3 text-foreground font-body"
+                >
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  {drink}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default SidesAndDrinks;
