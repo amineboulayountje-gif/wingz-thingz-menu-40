@@ -36,13 +36,18 @@ const HeroSection = () => {
           className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-8"
           style={{ animation: "slide-up 0.8s ease-out 0.3s both" }}
         >
-          {["Wings", "Lamb Chops", "Bijgerechten", "Dranken"].map((item, i) => (
-            <span
-              key={item}
-              className="px-4 py-1.5 rounded-full text-sm md:text-base font-semibold font-body border border-primary/30 bg-primary/10 text-primary backdrop-blur-sm"
+        {[
+            { label: "Wings & Lamb Chops", href: "#menu" },
+            { label: "Bijgerechten", href: "#sides" },
+            { label: "Dranken", href: "#drinks" },
+          ].map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="px-4 py-1.5 rounded-full text-sm md:text-base font-semibold font-body border border-primary/30 bg-primary/10 text-primary backdrop-blur-sm hover:bg-primary/20 transition-colors"
             >
-              {item}
-            </span>
+              {item.label}
+            </a>
           ))}
         </div>
 

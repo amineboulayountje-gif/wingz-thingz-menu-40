@@ -18,9 +18,11 @@ const SidesAndDrinks = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-secondary/30">
-      <div className="max-w-5xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+   <section className="py-16 px-4 bg-secondary/30">
+     <div className="max-w-5xl mx-auto">
+       <div id="sides" className="scroll-mt-8" />
+       <div id="drinks" className="scroll-mt-8" />
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {/* Sides */}
           <div>
             <div className="flex items-center gap-3 mb-6">
