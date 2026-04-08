@@ -30,7 +30,8 @@ const OrderAndSocial = () => {
         {/* Order Button */}
         <div>
           <h2 className="text-3xl md:text-4xl font-display mb-4 text-gradient">
-            Ready to Order?
+            Klaar om te bestellen?
+          </h2>
           </h2>
           <a
             href={`https://wa.me/${whatsappNumber}?text=${orderMessage}`}
