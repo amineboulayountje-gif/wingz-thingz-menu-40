@@ -29,7 +29,7 @@ const MenuCard = ({ title, description, icon, accentColor, included }: MenuCardP
       </div>
       <p className="text-muted-foreground mb-4 font-body text-sm">{description}</p>
       <div className="text-xs text-muted-foreground border-t border-border pt-3">
-        <span className="text-foreground/70 font-semibold">Includes:</span> {included}
+        <span className="text-foreground/70 font-semibold">Inclusief:</span> {included}
       </div>
     </div>
   );
