@@ -68,7 +68,7 @@ export const MenuSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4">
+    <section id="menu" className="py-16 px-4 scroll-mt-8">
       <div className="max-w-5xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-display text-center mb-2 text-gradient">
           Ons Menu
