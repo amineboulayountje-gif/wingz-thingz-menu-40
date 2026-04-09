@@ -83,6 +83,7 @@ export const MenuSection = () => {
       accentColor: "hsl(0, 80%, 50%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
       image: spicyWingsImg,
+      price: "€14,99",
     },
     {
       title: "Lamb Chops",
