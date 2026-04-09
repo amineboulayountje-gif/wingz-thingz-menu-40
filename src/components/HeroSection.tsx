@@ -3,7 +3,7 @@ import { ChevronDown } from "lucide-react";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden">
+    <section className="relative min-h-[85svh] flex flex-col items-center justify-center overflow-hidden">
       {/* Layered background */}
       <div className="absolute inset-0 bg-background" />
       <div
