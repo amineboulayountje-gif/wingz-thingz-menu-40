@@ -35,10 +35,11 @@ const MenuCard = ({ title, description, icon, accentColor, included, image, pric
         />
       </div>
       <div className="p-4 sm:p-5">
-        <div className="flex items-center gap-3 mb-2">
-          <div
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
-            style={{ backgroundColor: accentColor + "22", color: accentColor }}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
+              style={{ backgroundColor: accentColor + "22", color: accentColor }}
           >
             {icon}
           </div>
