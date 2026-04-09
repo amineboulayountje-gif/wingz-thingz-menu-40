@@ -1,4 +1,8 @@
 import { Flame, Droplets, Drumstick } from "lucide-react";
+import classicWingsImg from "@/assets/classic-wings.jpg";
+import honeyWingsImg from "@/assets/honey-wings.jpg";
+import spicyWingsImg from "@/assets/spicy-wings.jpg";
+import lambChopsImg from "@/assets/lamb-chops.jpg";
 
 interface MenuCardProps {
   title: string;
@@ -6,30 +10,43 @@ interface MenuCardProps {
   icon: React.ReactNode;
   accentColor: string;
   included: string;
+  image: string;
 }
 
-const MenuCard = ({ title, description, icon, accentColor, included }: MenuCardProps) => {
+const MenuCard = ({ title, description, icon, accentColor, included, image }: MenuCardProps) => {
   return (
     <div
-      className="group relative bg-card rounded-lg p-4 sm:p-6 border border-border hover:border-primary/50 transition-all duration-300"
+      className="group relative bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-300 overflow-hidden"
       style={{ boxShadow: "var(--card-glow)" }}
     >
       <div
-        className="absolute top-0 left-0 right-0 h-1 rounded-t-lg"
+        className="absolute top-0 left-0 right-0 h-1 z-10"
         style={{ backgroundColor: accentColor }}
       />
-      <div className="flex items-center gap-3 mb-2 sm:mb-3">
-        <div
-          className="w-8 h-8 sm:w-10 sm:h-10 rounded-md flex items-center justify-center shrink-0"
-          style={{ backgroundColor: accentColor + "22", color: accentColor }}
-        >
-          {icon}
-        </div>
-        <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
+      <div className="h-36 sm:h-44 overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          loading="lazy"
+          width={512}
+          height={512}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
       </div>
-      <p className="text-muted-foreground mb-3 sm:mb-4 font-body text-xs sm:text-sm">{description}</p>
-      <div className="text-xs text-muted-foreground border-t border-border pt-2 sm:pt-3">
-        <span className="text-foreground/70 font-semibold">Inclusief:</span> {included}
+      <div className="p-4 sm:p-5">
+        <div className="flex items-center gap-3 mb-2">
+          <div
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
+            style={{ backgroundColor: accentColor + "22", color: accentColor }}
+          >
+            {icon}
+          </div>
+          <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
+        </div>
+        <p className="text-muted-foreground mb-3 font-body text-xs sm:text-sm">{description}</p>
+        <div className="text-xs text-muted-foreground border-t border-border pt-2 sm:pt-3">
+          <span className="text-foreground/70 font-semibold">Inclusief:</span> {included}
+        </div>
       </div>
     </div>
   );
@@ -43,6 +60,7 @@ export const MenuSection = () => {
       icon: <Drumstick size={20} />,
       accentColor: "hsl(30, 95%, 55%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
+      image: classicWingsImg,
     },
     {
       title: "Honey Wings",
@@ -50,6 +68,7 @@ export const MenuSection = () => {
       icon: <Droplets size={20} />,
       accentColor: "hsl(45, 95%, 50%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
+      image: honeyWingsImg,
     },
     {
       title: "Spicy Wings",
@@ -57,6 +76,7 @@ export const MenuSection = () => {
       icon: <Flame size={20} />,
       accentColor: "hsl(0, 80%, 50%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
+      image: spicyWingsImg,
     },
     {
       title: "Lamb Chops",
@@ -64,6 +84,7 @@ export const MenuSection = () => {
       icon: <Drumstick size={20} />,
       accentColor: "hsl(15, 40%, 45%)",
       included: "Lamskoteletten + 2 Bijgerechten + 1 Drankje",
+      image: lambChopsImg,
     },
   ];
 
