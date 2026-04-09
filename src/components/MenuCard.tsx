@@ -43,7 +43,9 @@ const MenuCard = ({ title, description, icon, accentColor, included, image, pric
           >
             {icon}
           </div>
-          <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
+            <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
+          </div>
+          <span className="text-lg sm:text-xl font-display text-primary">{price}</span>
         </div>
         <p className="text-muted-foreground mb-3 font-body text-xs sm:text-sm">{description}</p>
         <div className="text-xs text-muted-foreground border-t border-border pt-2 sm:pt-3">
