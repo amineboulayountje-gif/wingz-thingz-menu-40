@@ -1,20 +1,30 @@
 import { UtensilsCrossed, GlassWater } from "lucide-react";
+import seasonedPotatoesImg from "@/assets/seasoned-potatoes.jpg";
+import coleslawImg from "@/assets/coleslaw.jpg";
+import macCheeseImg from "@/assets/mac-cheese.jpg";
+import buttercornImg from "@/assets/buttercorn.jpg";
+import cheesyGratinImg from "@/assets/cheesy-gratin.jpg";
+import colaImg from "@/assets/cola.jpg";
+import fantaImg from "@/assets/fanta.jpg";
+import iceTeaImg from "@/assets/ice-tea.jpg";
+import iceTeaGreenImg from "@/assets/ice-tea-green.jpg";
+import waterImg from "@/assets/water.jpg";
 
 const SidesAndDrinks = () => {
   const sides = [
-    "Seasoned Potatoes",
-    "Coleslaw",
-    "Mac & Cheese",
-    "Buttercorn on the Cob",
-    "Cheesy Gratin",
+    { name: "Seasoned Potatoes", image: seasonedPotatoesImg },
+    { name: "Coleslaw", image: coleslawImg },
+    { name: "Mac & Cheese", image: macCheeseImg },
+    { name: "Buttercorn on the Cob", image: buttercornImg },
+    { name: "Cheesy Gratin", image: cheesyGratinImg },
   ];
 
   const drinks = [
-    "Cola",
-    "Fanta",
-    "Ice Tea",
-    "Ice Tea Green",
-    "Water",
+    { name: "Cola", image: colaImg },
+    { name: "Fanta", image: fantaImg },
+    { name: "Ice Tea", image: iceTeaImg },
+    { name: "Ice Tea Green", image: iceTeaGreenImg },
+    { name: "Water", image: waterImg },
   ];
 
   return (
@@ -33,11 +43,18 @@ const SidesAndDrinks = () => {
             <ul className="space-y-2 sm:space-y-3">
               {sides.map((side) => (
                 <li
-                  key={side}
-                  className="flex items-center gap-3 bg-card border border-border rounded-md px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-foreground font-body"
+                  key={side.name}
+                  className="flex items-center gap-3 bg-card border border-border rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base text-foreground font-body"
                 >
-                  <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                  {side}
+                  <img
+                    src={side.image}
+                    alt={side.name}
+                    loading="lazy"
+                    width={512}
+                    height={512}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-md object-cover shrink-0"
+                  />
+                  {side.name}
                 </li>
               ))}
             </ul>
@@ -55,11 +72,18 @@ const SidesAndDrinks = () => {
             <ul className="space-y-2 sm:space-y-3">
               {drinks.map((drink) => (
                 <li
-                  key={drink}
-                  className="flex items-center gap-3 bg-card border border-border rounded-md px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base text-foreground font-body"
+                  key={drink.name}
+                  className="flex items-center gap-3 bg-card border border-border rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base text-foreground font-body"
                 >
-                  <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
-                  {drink}
+                  <img
+                    src={drink.image}
+                    alt={drink.name}
+                    loading="lazy"
+                    width={512}
+                    height={512}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-md object-cover shrink-0"
+                  />
+                  {drink.name}
                 </li>
               ))}
             </ul>
