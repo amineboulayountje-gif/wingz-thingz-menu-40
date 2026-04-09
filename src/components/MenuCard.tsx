@@ -11,9 +11,10 @@ interface MenuCardProps {
   accentColor: string;
   included: string;
   image: string;
+  price: string;
 }
 
-const MenuCard = ({ title, description, icon, accentColor, included, image }: MenuCardProps) => {
+const MenuCard = ({ title, description, icon, accentColor, included, image, price }: MenuCardProps) => {
   return (
     <div
       className="group relative bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-300 overflow-hidden"
@@ -34,14 +35,17 @@ const MenuCard = ({ title, description, icon, accentColor, included, image }: Me
         />
       </div>
       <div className="p-4 sm:p-5">
-        <div className="flex items-center gap-3 mb-2">
-          <div
-            className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
-            style={{ backgroundColor: accentColor + "22", color: accentColor }}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
+              style={{ backgroundColor: accentColor + "22", color: accentColor }}
           >
             {icon}
           </div>
-          <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
+            <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
+          </div>
+          <span className="text-lg sm:text-xl font-display text-primary">{price}</span>
         </div>
         <p className="text-muted-foreground mb-3 font-body text-xs sm:text-sm">{description}</p>
         <div className="text-xs text-muted-foreground border-t border-border pt-2 sm:pt-3">
@@ -61,6 +65,7 @@ export const MenuSection = () => {
       accentColor: "hsl(30, 95%, 55%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
       image: classicWingsImg,
+      price: "€14,99",
     },
     {
       title: "Honey Wings",
@@ -69,6 +74,7 @@ export const MenuSection = () => {
       accentColor: "hsl(45, 95%, 50%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
       image: honeyWingsImg,
+      price: "€14,99",
     },
     {
       title: "Spicy Wings",
@@ -77,6 +83,7 @@ export const MenuSection = () => {
       accentColor: "hsl(0, 80%, 50%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
       image: spicyWingsImg,
+      price: "€14,99",
     },
     {
       title: "Lamb Chops",
@@ -85,6 +92,7 @@ export const MenuSection = () => {
       accentColor: "hsl(15, 40%, 45%)",
       included: "Lamskoteletten + 2 Bijgerechten + 1 Drankje",
       image: lambChopsImg,
+      price: "€17,99",
     },
   ];
 
