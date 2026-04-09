@@ -1,5 +1,5 @@
 import logo from "@/assets/logo.png";
-import { ChevronDown } from "lucide-react";
+
 
 const HeroSection = () => {
   return (
