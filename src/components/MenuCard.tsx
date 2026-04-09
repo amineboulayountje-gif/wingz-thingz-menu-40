@@ -1,10 +1,11 @@
-import { Flame, Droplets, Drumstick } from "lucide-react";
+import { Flame, Droplets, Drumstick, Check } from "lucide-react";
 import classicWingsImg from "@/assets/classic-wings.jpg";
 import honeyWingsImg from "@/assets/honey-wings.jpg";
 import spicyWingsImg from "@/assets/spicy-wings.jpg";
 import lambChopsImg from "@/assets/lamb-chops.jpg";
+import { useOrder } from "@/context/OrderContext";
 
-interface MenuCardProps {
+interface MenuItemData {
   title: string;
   description: string;
   icon: React.ReactNode;
@@ -14,12 +15,29 @@ interface MenuCardProps {
   price: string;
 }
 
-const MenuCard = ({ title, description, icon, accentColor, included, image, price }: MenuCardProps) => {
+const MenuCard = ({ title, description, icon, accentColor, included, image, price }: MenuItemData) => {
+  const { order, setMenu } = useOrder();
+  const isSelected = order.menu?.name === title;
+
+  const handleSelect = () => {
+    setMenu(isSelected ? null : { name: title, price, image });
+  };
+
   return (
-    <div
-      className="group relative bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-300 overflow-hidden"
+    <button
+      onClick={handleSelect}
+      className={`group relative bg-card rounded-lg border-2 transition-all duration-300 overflow-hidden text-left w-full ${
+        isSelected
+          ? "border-primary ring-2 ring-primary/20"
+          : "border-border hover:border-primary/50"
+      }`}
       style={{ boxShadow: "var(--card-glow)" }}
     >
+      {isSelected && (
+        <div className="absolute top-3 right-3 z-20 w-7 h-7 rounded-full bg-primary flex items-center justify-center">
+          <Check size={16} className="text-primary-foreground" />
+        </div>
+      )}
       <div
         className="absolute top-0 left-0 right-0 h-1 z-10"
         style={{ backgroundColor: accentColor }}
@@ -40,9 +58,9 @@ const MenuCard = ({ title, description, icon, accentColor, included, image, pric
             <div
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
               style={{ backgroundColor: accentColor + "22", color: accentColor }}
-          >
-            {icon}
-          </div>
+            >
+              {icon}
+            </div>
             <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
           </div>
           <span className="text-lg sm:text-xl font-display text-primary">{price}</span>
@@ -52,12 +70,12 @@ const MenuCard = ({ title, description, icon, accentColor, included, image, pric
           <span className="text-foreground/70 font-semibold">Inclusief:</span> {included}
         </div>
       </div>
-    </div>
+    </button>
   );
 };
 
 export const MenuSection = () => {
-  const menus = [
+  const menus: MenuItemData[] = [
     {
       title: "Classic Wings",
       description: "Gouden krokante wings met onze kenmerkende klassieke kruiden. Een tijdloze favoriet.",
@@ -99,12 +117,15 @@ export const MenuSection = () => {
   return (
     <section id="menu" className="py-10 sm:py-16 px-4 scroll-mt-8">
       <div className="max-w-5xl mx-auto">
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display text-center mb-1 sm:mb-2 text-gradient">
-          Ons Menu
-        </h2>
-        <p className="text-center text-muted-foreground text-sm mb-6 sm:mb-10">
-          Kies je eiwit — elke combo komt met 2 bijgerechten & een drankje
-        </p>
+        <div className="text-center mb-6 sm:mb-10">
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Stap 1</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display mb-1 sm:mb-2 text-gradient">
+            Kies je gerecht
+          </h2>
+          <p className="text-muted-foreground text-sm">
+            Elke combo komt met 2 bijgerechten & een drankje
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {menus.map((menu) => (
             <MenuCard key={menu.title} {...menu} />
