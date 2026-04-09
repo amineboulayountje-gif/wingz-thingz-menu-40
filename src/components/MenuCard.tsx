@@ -92,6 +92,7 @@ export const MenuSection = () => {
       accentColor: "hsl(15, 40%, 45%)",
       included: "Lamskoteletten + 2 Bijgerechten + 1 Drankje",
       image: lambChopsImg,
+      price: "€17,99",
     },
   ];
 
