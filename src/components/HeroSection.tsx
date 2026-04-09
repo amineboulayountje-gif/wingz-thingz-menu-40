@@ -1,5 +1,5 @@
 import logo from "@/assets/logo.png";
-import { ChevronDown } from "lucide-react";
+
 
 const HeroSection = () => {
   return (
@@ -50,17 +50,7 @@ const HeroSection = () => {
             </a>
           ))}
         </div>
-
-        <a
-          href="#menu"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors text-sm font-body"
-          style={{ animation: "fade-in 1s ease-out 0.8s both" }}
-        >
-          Bekijk het menu
-          <ChevronDown size={16} className="animate-bounce" />
-        </a>
       </div>
-
       {/* Bottom fade */}
       <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-background to-transparent" />
     </section>
