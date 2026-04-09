@@ -14,7 +14,7 @@ interface MenuCardProps {
   price: string;
 }
 
-const MenuCard = ({ title, description, icon, accentColor, included, image }: MenuCardProps) => {
+const MenuCard = ({ title, description, icon, accentColor, included, image, price }: MenuCardProps) => {
   return (
     <div
       className="group relative bg-card rounded-lg border border-border hover:border-primary/50 transition-all duration-300 overflow-hidden"
