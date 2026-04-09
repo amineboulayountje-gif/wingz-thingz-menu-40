@@ -65,6 +65,7 @@ export const MenuSection = () => {
       accentColor: "hsl(30, 95%, 55%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
       image: classicWingsImg,
+      price: "€14,99",
     },
     {
       title: "Honey Wings",
