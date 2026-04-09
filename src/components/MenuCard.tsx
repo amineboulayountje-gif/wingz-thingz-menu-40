@@ -11,6 +11,7 @@ interface MenuCardProps {
   accentColor: string;
   included: string;
   image: string;
+  price: string;
 }
 
 const MenuCard = ({ title, description, icon, accentColor, included, image }: MenuCardProps) => {
