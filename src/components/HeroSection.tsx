@@ -17,9 +17,11 @@ const HeroSection = () => {
           </span>
         </div>
 
-        {/* Right: CTA Button */}
+        {/* Right: WhatsApp Order Button */}
         <a
-          href="#menu"
+          href="https://wa.me/32483691967?text=Hallo%20ik%20wil%20graag%20bestellen"
+          target="_blank"
+          rel="noopener noreferrer"
           className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition"
         >
           Bestellen
