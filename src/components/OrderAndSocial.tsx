@@ -1,5 +1,23 @@
-import { MessageCircle, X, ShoppingBag, Ghost, Music2, Instagram } from "lucide-react";
+import { MessageCircle, X, ShoppingBag } from "lucide-react";
 import { useOrder } from "@/context/OrderContext";
+
+const SnapchatIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M12.206.793c.99 0 4.347.276 5.93 3.821..." />
+  </svg>
+);
+
+const TikTokIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25..." />
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07..." />
+  </svg>
+);
 
 const OrderAndSocial = () => {
   const { order, isComplete, resetOrder } = useOrder();
@@ -8,20 +26,22 @@ const OrderAndSocial = () => {
 
   const hasItems = !!order.menu;
 
-  const itemCount =
-    (order.menu ? 1 : 0) + order.sides.length + (order.drink ? 1 : 0);
-
   const whatsappMessage = `
-🍗 *Wingz and Thingz Order*
+Order via Wingz and Thingz
 
-${order.menu ? `🍽️ Gerecht: ${order.menu.name} (${order.menu.price})` : ""}
-${order.sides.length ? `🥗 Bijgerechten: ${order.sides.join(", ")}` : ""}
-${order.drink ? `🥤 Drank: ${order.drink}` : ""}
-
-🔥 Aantal items: ${itemCount}
-
-Dank je voor je bestelling! 🙌
+${order.menu ? `Gerecht: ${order.menu.name} (${order.menu.price})` : ""}
+${order.sides.length ? `Bijgerechten: ${order.sides.join(", ")}` : ""}
+${order.drink ? `Drank: ${order.drink}` : ""}
 `.trim();
+
+  // ONE LINE missing-step message
+  const missingStepMessage = !order.menu
+    ? "Kies een gerecht"
+    : order.sides.length < 2
+    ? `Kies nog ${2 - order.sides.length} bijgerecht${order.sides.length === 1 ? "" : "en"}`
+    : !order.drink
+    ? "Kies een drankje"
+    : "";
 
   return (
     <>
@@ -33,43 +53,19 @@ Dank je voor je bestelling! 🙌
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
-                  Jouw bestelling ({itemCount} items)
+                  Jouw bestelling
                 </p>
 
                 <div className="space-y-0.5 text-xs sm:text-sm text-foreground">
-                  {order.menu && (
-                    <p>
-                      🍗 {order.menu.name} ·{" "}
-                      <span className="text-primary font-semibold">
-                        {order.menu.price}
-                      </span>
-                    </p>
-                  )}
-
-                  {order.sides.length > 0 && (
-                    <p className="text-muted-foreground">
-                      🥗 {order.sides.join(", ")}
-                    </p>
-                  )}
-
-                  {order.drink && (
-                    <p className="text-muted-foreground">
-                      🥤 {order.drink}
-                    </p>
-                  )}
+                  {order.menu && <p>{order.menu.name}</p>}
+                  {order.sides.length > 0 && <p>{order.sides.join(", ")}</p>}
+                  {order.drink && <p>{order.drink}</p>}
                 </div>
 
-                {!isComplete && (
-                  <p className="text-[10px] text-muted-foreground mt-1">
-                    {!order.menu
-                      ? "Kies een gerecht"
-                      : order.sides.length < 2
-                      ? `Kies nog ${2 - order.sides.length} bijgerecht${
-                          order.sides.length === 1 ? "" : "en"
-                        }`
-                      : "Kies een drankje"}
-                  </p>
-                )}
+                {/* ONE LINE STATUS MESSAGE */}
+                <p className="text-[10px] text-muted-foreground mt-1">
+                  {missingStepMessage}
+                </p>
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
@@ -96,7 +92,7 @@ Dank je voor je bestelling! 🙌
                   tabIndex={isComplete ? 0 : -1}
                 >
                   <MessageCircle size={18} />
-                  Bestel via WhatsApp
+                  Bestellen
                 </a>
               </div>
             </div>
@@ -104,52 +100,50 @@ Dank je voor je bestelling! 🙌
         </div>
       )}
 
-      {/* Social + footer */}
+      {/* Social */}
       <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-32" : ""}`}>
         <div className="max-w-md mx-auto text-center space-y-6 sm:space-y-8">
-          <div>
-            <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4">
-              Volg ons
-            </p>
+          <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4">
+            Volg ons
+          </p>
 
-            <div className="flex items-center justify-center gap-4 sm:gap-5">
-              {/* Snapchat */}
-              <a
-                href="https://www.snapchat.com/add/wingz.andthingz"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
-                aria-label="Snapchat"
-              >
-                <Ghost />
-              </a>
+          <div className="flex items-center justify-center gap-4 sm:gap-5">
+            {/* Snapchat */}
+            <a
+              href="https://www.snapchat.com/add/wingz.andthingz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              aria-label="Snapchat"
+            >
+              <SnapchatIcon />
+            </a>
 
-              {/* TikTok */}
-              <a
-                href="https://www.tiktok.com/@wingzandthingz"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
-                aria-label="TikTok"
-              >
-                <Music2 />
-              </a>
+            {/* TikTok */}
+            <a
+              href="https://www.tiktok.com/@wingzandthingz"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              aria-label="TikTok"
+            >
+              <TikTokIcon />
+            </a>
 
-              {/* Instagram */}
-              <a
-                href="https://www.instagram.com/wingzandthingz.antwerp/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
-                aria-label="Instagram"
-              >
-                <Instagram />
-              </a>
-            </div>
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/wingzandthingz.antwerp/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              aria-label="Instagram"
+            >
+              <InstagramIcon />
+            </a>
           </div>
 
           <p className="text-muted-foreground text-xs pt-6 sm:pt-8 border-t border-border">
-            © 2026 Wingz and Thingz. Alle rechten voorbehouden.
+            © 2026 Wingz and Thingz
           </p>
         </div>
       </section>
