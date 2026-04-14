@@ -44,12 +44,13 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
 
   return (
     <>
-      {/* ONLY STICKY ORDER BAR */}
+      {/* STICKY ORDER BAR */}
       {hasItems && (
         <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
           <div className="max-w-5xl mx-auto px-4 py-3 sm:py-4">
             <div className="flex items-start gap-3">
-              {/* LEFT SIDE */}
+              
+              {/* LEFT */}
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
@@ -68,8 +69,9 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
                 </p>
               </div>
 
-              {/* RIGHT SIDE BUTTONS */}
+              {/* RIGHT BUTTONS */}
               <div className="flex items-center gap-2 shrink-0">
+                
                 <button
                   onClick={resetOrder}
                   className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
@@ -101,20 +103,22 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
         </div>
       )}
 
-      {/* SOCIAL SECTION (NOT STICKY) */}
+      {/* SOCIAL SECTION */}
       <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-40" : ""}`}>
         <div className="max-w-md mx-auto text-center space-y-6 sm:space-y-8">
+
           <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4">
             Volg ons
           </p>
 
-          <div className="flex items-center justify-center gap-4 sm:gap-5">
+          <div className="flex items-center justify-center gap-4 sm:gap-5 text-[hsl(30,95%,55%)]">
+
             {/* Snapchat */}
             <a
               href="https://www.snapchat.com/add/wingz.andthingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
               aria-label="Snapchat"
             >
               <SnapchatIcon />
@@ -125,7 +129,7 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
               href="https://www.tiktok.com/@wingzandthingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
               aria-label="TikTok"
             >
               <TikTokIcon />
@@ -136,16 +140,18 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
               href="https://www.instagram.com/wingzandthingz.antwerp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
               aria-label="Instagram"
             >
               <InstagramIcon />
             </a>
+
           </div>
 
           <p className="text-muted-foreground text-xs pt-6 sm:pt-8 border-t border-border">
             © 2026 Wingz and Thingz
           </p>
+
         </div>
       </section>
     </>
