@@ -26,13 +26,14 @@ const OrderAndSocial = () => {
 
   const hasItems = !!order.menu;
 
-  const whatsappMessage = `
-Order via Wingz and Thingz
+  // ✅ price parser ("€14,99" → 14.99)
+  const parsePrice = (price?: string) => {
+    if (!price) return 0;
+    return parseFloat(price.replace("€", "").replace(",", "."));
+  };
 
-${order.menu ? `Gerecht: ${order.menu.name} (${order.menu.price})` : ""}
-${order.sides.length ? `Bijgerechten: ${order.sides.join(", ")}` : ""}
-${order.drink ? `Drank: ${order.drink}` : ""}
-`.trim();
+  const menuPrice = parsePrice(order.menu?.price);
+  const total = menuPrice;
 
   const missingStepMessage = !order.menu
     ? "Kies een gerecht"
@@ -42,6 +43,16 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
     ? "Kies een drankje"
     : "";
 
+  const whatsappMessage = `
+🍗 Wingz and Thingz bestelling
+
+Gerecht: ${order.menu?.name ?? ""}
+Bijgerechten: ${order.sides.join(", ")}
+Drank: ${order.drink ?? ""}
+
+Totaal: €${total.toFixed(2)}
+`.trim();
+
   return (
     <>
       {/* STICKY ORDER BAR */}
@@ -49,29 +60,39 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
         <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
           <div className="max-w-5xl mx-auto px-4 py-3 sm:py-4">
             <div className="flex items-start gap-3">
-              
+
               {/* LEFT */}
               <div className="flex-1 min-w-0">
+
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
                   Jouw bestelling
                 </p>
 
+                {/* CLEAN SUMMARY (no icons) */}
                 <div className="space-y-0.5 text-xs sm:text-sm text-foreground">
                   {order.menu && <p>{order.menu.name}</p>}
                   {order.sides.length > 0 && <p>{order.sides.join(", ")}</p>}
                   {order.drink && <p>{order.drink}</p>}
                 </div>
 
-                {/* ONE LINE STATUS */}
+                {/* MISSING STEP (1 LINE ONLY) */}
                 <p className="text-[10px] text-muted-foreground mt-1">
                   {missingStepMessage}
                 </p>
+
+                {/* TOTAL PRICE */}
+                {order.menu && (
+                  <p className="text-xs font-semibold text-primary mt-1">
+                    Totaal: €{total.toFixed(2)}
+                  </p>
+                )}
+
               </div>
 
-              {/* RIGHT BUTTONS */}
+              {/* RIGHT */}
               <div className="flex items-center gap-2 shrink-0">
-                
+
                 <button
                   onClick={resetOrder}
                   className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
@@ -97,6 +118,7 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
                   <MessageCircle size={18} />
                   Bestellen
                 </a>
+
               </div>
             </div>
           </div>
@@ -111,36 +133,33 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
             Volg ons
           </p>
 
-          <div className="flex items-center justify-center gap-4 sm:gap-5 text-[hsl(30,95%,55%)]">
+          <div className="flex items-center justify-center gap-4 sm:gap-5">
 
-            {/* Snapchat */}
             <a
               href="https://www.snapchat.com/add/wingz.andthingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="Snapchat"
             >
               <SnapchatIcon />
             </a>
 
-            {/* TikTok */}
             <a
               href="https://www.tiktok.com/@wingzandthingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="TikTok"
             >
               <TikTokIcon />
             </a>
 
-            {/* Instagram */}
             <a
               href="https://www.instagram.com/wingzandthingz.antwerp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:opacity-80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="Instagram"
             >
               <InstagramIcon />
