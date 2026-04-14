@@ -34,7 +34,6 @@ ${order.sides.length ? `Bijgerechten: ${order.sides.join(", ")}` : ""}
 ${order.drink ? `Drank: ${order.drink}` : ""}
 `.trim();
 
-  // ONE LINE missing-step message
   const missingStepMessage = !order.menu
     ? "Kies een gerecht"
     : order.sides.length < 2
@@ -45,11 +44,12 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
 
   return (
     <>
-      {/* Sticky order bar */}
+      {/* ONLY STICKY ORDER BAR */}
       {hasItems && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg">
+        <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
           <div className="max-w-5xl mx-auto px-4 py-3 sm:py-4">
             <div className="flex items-start gap-3">
+              {/* LEFT SIDE */}
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
@@ -62,12 +62,13 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
                   {order.drink && <p>{order.drink}</p>}
                 </div>
 
-                {/* ONE LINE STATUS MESSAGE */}
+                {/* ONE LINE STATUS */}
                 <p className="text-[10px] text-muted-foreground mt-1">
                   {missingStepMessage}
                 </p>
               </div>
 
+              {/* RIGHT SIDE BUTTONS */}
               <div className="flex items-center gap-2 shrink-0">
                 <button
                   onClick={resetOrder}
@@ -100,8 +101,8 @@ ${order.drink ? `Drank: ${order.drink}` : ""}
         </div>
       )}
 
-      {/* Social */}
-      <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-32" : ""}`}>
+      {/* SOCIAL SECTION (NOT STICKY) */}
+      <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-40" : ""}`}>
         <div className="max-w-md mx-auto text-center space-y-6 sm:space-y-8">
           <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4">
             Volg ons
