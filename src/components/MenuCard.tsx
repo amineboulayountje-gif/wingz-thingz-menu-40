@@ -123,7 +123,7 @@ export const MenuSection = () => {
   ];
 
   return (
-    <section id="menu" className="py-10 sm:py-16 px-4 scroll-mt-8">
+    <section id="menu" className="py-5 sm:py-16 px-4 scroll-mt-8">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-6 sm:mb-10">
           <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Stap 1</p>
