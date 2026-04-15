@@ -58,7 +58,7 @@ Totaal: €${total.toFixed(2)}
       {/* STICKY ORDER BAR */}
       {hasItems && (
         <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
-          <div className="max-w-5xl mx-auto px-4 py-3 sm:py-4">
+          <div className="max-w-5xl mx-auto px-4 py-2 sm:py-3">
             <div className="flex items-start gap-3">
 
               {/* LEFT */}
