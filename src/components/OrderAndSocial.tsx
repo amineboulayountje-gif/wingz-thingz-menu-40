@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MessageCircle, X, ShoppingBag } from "lucide-react";
 import { useOrder } from "@/context/OrderContext";
 
@@ -20,13 +21,13 @@ const SnapchatIcon = () => (
 
 const TikTokIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-    <path d="M19 7a5 5 0 0 1-4-4V3h-3v12a3 3 0 1 1-3-3V9a6 6 0 1 0 6 6V9.5a5 5 0 0 0 4 1.5V7z"/>
+    <path d="M19 7a5 5 0 0 1-4-4V3h-3v12a3 3 0 1 1-3-3V9a6 6 0 1 0 6 6V9.5a5 5 0 0 0 4 1.5V7z" />
   </svg>
 );
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
   </svg>
 );
 
@@ -42,6 +43,8 @@ const OrderAndSocial = () => {
     resetOrder,
   } = useOrder();
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const whatsappNumber = "32483691967";
 
   const hasItems = orders.length > 0;
@@ -51,13 +54,11 @@ const OrderAndSocial = () => {
     return parseFloat(price.replace("€", "").replace(",", "."));
   };
 
-  // ✅ TOTAL = ALL ORDERS
   const total = orders.reduce(
     (sum, o) => sum + parsePrice(o.menu?.price),
     0
   );
 
-  // ✅ CURRENT ORDER VALIDATION
   const missingStepMessage = !currentOrder.menu
     ? "Kies een gerecht"
     : currentOrder.sides.length < 2
@@ -66,7 +67,6 @@ const OrderAndSocial = () => {
     ? "Kies een drankje"
     : "";
 
-  // ✅ WHATSAPP MULTI ORDER MESSAGE
   const whatsappMessage = `
 🍗 Wingz and Thingz bestelling
 
@@ -89,17 +89,32 @@ Totaal: €${total.toFixed(2)}
       {/* STICKY ORDER BAR */}
       {hasItems && (
         <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
+
           <div className="max-w-5xl mx-auto px-4 py-2 sm:py-3">
-            <div className="flex items-start gap-3">
+
+            <div
+              className="flex items-start gap-3 cursor-pointer"
+              onClick={() => setIsOpen(!isOpen)}
+              style={{ touchAction: "manipulation" }}
+            >
 
               {/* LEFT */}
               <div className="flex-1 min-w-0">
+
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
                   Jouw bestelling ({orders.length})
+                  <span className="ml-auto text-[10px] text-muted-foreground">
+                    {isOpen ? "sluiten ▲" : "open ▼"}
+                  </span>
                 </p>
 
-                <div className="space-y-0.5 text-xs sm:text-sm text-foreground">
+                {/* ORDER LIST (EXPANDABLE) */}
+                <div
+                  className={`space-y-1 text-xs sm:text-sm text-foreground overflow-hidden transition-all duration-300 ${
+                    isOpen ? "max-h-60 overflow-y-auto pr-2" : "max-h-10"
+                  }`}
+                >
                   {orders.map((o, i) => (
                     <p key={i}>
                       {i + 1}. {o.menu?.name} — {o.sides.join(", ")} — {o.drink}
@@ -114,13 +129,17 @@ Totaal: €${total.toFixed(2)}
                 <p className="text-xs font-semibold text-primary mt-1">
                   Totaal: €{total.toFixed(2)}
                 </p>
+
               </div>
 
               {/* RIGHT */}
               <div className="flex items-center gap-2 shrink-0">
 
                 <button
-                  onClick={resetOrder}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    resetOrder();
+                  }}
                   className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <X size={16} />
@@ -132,6 +151,7 @@ Totaal: €${total.toFixed(2)}
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
                   className={`inline-flex items-center gap-2 font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-300 shadow-lg ${
                     isComplete
                       ? "bg-[#25D366] hover:bg-[#20bd5a] text-white hover:scale-105"
@@ -143,6 +163,7 @@ Totaal: €${total.toFixed(2)}
                 </a>
 
               </div>
+
             </div>
           </div>
         </div>
