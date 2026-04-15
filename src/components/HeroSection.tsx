@@ -48,9 +48,7 @@ const HeroSection = () => {
       </header>
 
       {/* HERO SECTION */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-5 sm:py-0">
-
-        <div className="max-w-2xl w-full">
+<section className="flex flex-col items-center justify-center text-center px-4 pt-5 pb-2 sm:pt-6 sm:pb-3">  <div className="max-w-2xl w-full">
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
             Antwerp’s Finest Wingz & Thingz
