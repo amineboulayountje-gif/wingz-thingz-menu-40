@@ -56,10 +56,6 @@ const HeroSection = () => {
             🍗 Verse wings, lamb chops en unieke huisgemaakte sides
           </p>
 
-          <p className="text-muted-foreground text-xs sm:text-sm">
-            Kies je proteïne → sides → drankje → bestel via WhatsApp
-          </p>
-
         </div>
 
       </section>
