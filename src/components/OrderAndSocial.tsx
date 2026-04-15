@@ -10,7 +10,7 @@ const OrderAndSocial = () => {
   const { order, isComplete, resetOrder } = useOrder();
 
   const whatsappNumber = "32483691967";
-
+ 
   const hasItems = !!order.menu;
 
   // ✅ price parser ("€14,99" → 14.99)
