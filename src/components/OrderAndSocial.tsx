@@ -35,32 +35,51 @@ const InstagramIcon = () => (
 ========================= */
 
 const OrderAndSocial = () => {
-  const { order, isComplete, resetOrder } = useOrder();
+  const {
+    orders,
+    currentOrder,
+    isComplete,
+    resetOrder,
+  } = useOrder();
 
   const whatsappNumber = "32483691967";
-  const hasItems = !!order.menu;
+
+  const hasItems = orders.length > 0;
 
   const parsePrice = (price?: string) => {
     if (!price) return 0;
     return parseFloat(price.replace("€", "").replace(",", "."));
   };
 
-  const total = parsePrice(order.menu?.price);
+  // ✅ TOTAL = ALL ORDERS
+  const total = orders.reduce(
+    (sum, o) => sum + parsePrice(o.menu?.price),
+    0
+  );
 
-  const missingStepMessage = !order.menu
+  // ✅ CURRENT ORDER VALIDATION
+  const missingStepMessage = !currentOrder.menu
     ? "Kies een gerecht"
-    : order.sides.length < 2
-    ? `Kies nog ${2 - order.sides.length} bijgerecht${order.sides.length === 1 ? "" : "en"}`
-    : !order.drink
+    : currentOrder.sides.length < 2
+    ? `Kies nog ${2 - currentOrder.sides.length} bijgerecht${currentOrder.sides.length === 1 ? "" : "en"}`
+    : !currentOrder.drink
     ? "Kies een drankje"
     : "";
 
+  // ✅ WHATSAPP MULTI ORDER MESSAGE
   const whatsappMessage = `
 🍗 Wingz and Thingz bestelling
 
-Gerecht: ${order.menu?.name ?? ""}
-Bijgerechten: ${order.sides.join(", ")}
-Drank: ${order.drink ?? ""}
+${orders
+  .map(
+    (o, i) => `
+Bestelling ${i + 1}
+Gerecht: ${o.menu?.name}
+Bijgerechten: ${o.sides.join(", ")}
+Drank: ${o.drink}
+`
+  )
+  .join("\n")}
 
 Totaal: €${total.toFixed(2)}
 `.trim();
@@ -77,24 +96,24 @@ Totaal: €${total.toFixed(2)}
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
-                  Jouw bestelling
+                  Jouw bestelling ({orders.length})
                 </p>
 
                 <div className="space-y-0.5 text-xs sm:text-sm text-foreground">
-                  {order.menu && <p>{order.menu.name}</p>}
-                  {order.sides.length > 0 && <p>{order.sides.join(", ")}</p>}
-                  {order.drink && <p>{order.drink}</p>}
+                  {orders.map((o, i) => (
+                    <p key={i}>
+                      {i + 1}. {o.menu?.name} — {o.sides.join(", ")} — {o.drink}
+                    </p>
+                  ))}
                 </div>
 
                 <p className="text-[10px] text-muted-foreground mt-1">
                   {missingStepMessage}
                 </p>
 
-                {order.menu && (
-                  <p className="text-xs font-semibold text-primary mt-1">
-                    Totaal: €{total.toFixed(2)}
-                  </p>
-                )}
+                <p className="text-xs font-semibold text-primary mt-1">
+                  Totaal: €{total.toFixed(2)}
+                </p>
               </div>
 
               {/* RIGHT */}
@@ -139,32 +158,20 @@ Totaal: €${total.toFixed(2)}
 
           <div className="flex items-center justify-center gap-5">
 
-            {/* Snapchat */}
-            <a
-              href="https://www.snapchat.com/add/wingz.andthingz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
+            <a href="https://www.snapchat.com/add/wingz.andthingz"
+              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center hover:scale-110 transition"
             >
               <SnapchatIcon />
             </a>
 
-            {/* TikTok */}
-            <a
-              href="https://www.tiktok.com/@wingz.and.thingz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
+            <a href="https://www.tiktok.com/@wingz.and.thingz"
+              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center hover:scale-110 transition"
             >
               <TikTokIcon />
             </a>
 
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/wingzandthingz.antwerp/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
+            <a href="https://www.instagram.com/wingzandthingz.antwerp/"
+              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center hover:scale-110 transition"
             >
               <InstagramIcon />
             </a>
