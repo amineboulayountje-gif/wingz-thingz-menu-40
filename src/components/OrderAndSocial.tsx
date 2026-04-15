@@ -146,7 +146,7 @@ Totaal: €${total.toFixed(2)}
             </a>
 
             <a
-              href="https://www.tiktok.com/@wingzandthingz"
+              href="https://www.tiktok.com/@wingz.and.thingz"
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
