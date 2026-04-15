@@ -55,7 +55,22 @@ const SidesAndDrinks = () => {
                 return (
                   <li key={side.name}>
                     <button
-                      onClick={() => toggleSide(side.name)}
+                      onClick={() => {
+  toggleSide(side.name);
+
+  // simulate next state
+  let newCount = order.sides.includes(side.name)
+    ? order.sides.length - 1
+    : order.sides.length + 1;
+
+  // ✅ ONLY scroll when exactly 2 selected
+  if (newCount === 2) {
+    setTimeout(() => {
+      const el = document.getElementById("drinks");
+      el?.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+  }
+}}
                       disabled={isDisabled}
                       className={`w-full flex items-center gap-3 rounded-md px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base font-body transition-all duration-200 ${
                         isSelected
