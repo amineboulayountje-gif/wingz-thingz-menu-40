@@ -2,24 +2,24 @@ import { MessageCircle, X, ShoppingBag } from "lucide-react";
 import { useOrder } from "@/context/OrderContext";
 
 /* =========================
-   ORIGINAL SOCIAL ICONS
+   CLEAN CUSTOM ICONS
 ========================= */
 
 const SnapchatIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-    <path d="M12.206.793c.99 0 4.347.276 5.93 3.821..." />
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+    <path d="M12 2c-3 0-5 2-5 5 0 2.2 1 3.6 1 5 0 .5-.5 1-1 1-.3 0-.7-.1-1 .2-.3.3-.3.8.2 1 1 .5 2 .7 2.5 1.5.5.7.5 1.8-.5 2.5-.5.4-1.3.6-2 .6-.6 0-1 .2-1 .7 0 .6 2 1 4 1 1.5 0 3-.5 4-1.5 1 .8 2.5 1.5 4 1.5 2 0 4-.4 4-1 0-.5-.4-.7-1-.7-.7 0-1.5-.2-2-.6-1-.7-1-1.8-.5-2.5.5-.8 1.5-1 2.5-1.5.5-.2.5-.7.2-1-.3-.3-.7-.2-1-.2-.5 0-1-.5-1-1 0-3-2-5-5-5z"/>
   </svg>
 );
 
 const TikTokIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25..." />
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+    <path d="M19 7a5 5 0 0 1-4-4V3h-3v12a3 3 0 1 1-3-3V9a6 6 0 1 0 6 6V9.5a5 5 0 0 0 4 1.5V7z"/>
   </svg>
 );
 
 const InstagramIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
-    <path d="M12 2.163c3.204 0 3.584.012 4.85.07..." />
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
+    <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
   </svg>
 );
 
@@ -31,7 +31,6 @@ const OrderAndSocial = () => {
   const { order, isComplete, resetOrder } = useOrder();
 
   const whatsappNumber = "32483691967";
-
   const hasItems = !!order.menu;
 
   const parsePrice = (price?: string) => {
@@ -39,8 +38,7 @@ const OrderAndSocial = () => {
     return parseFloat(price.replace("€", "").replace(",", "."));
   };
 
-  const menuPrice = parsePrice(order.menu?.price);
-  const total = menuPrice;
+  const total = parsePrice(order.menu?.price);
 
   const missingStepMessage = !order.menu
     ? "Kies een gerecht"
@@ -70,7 +68,6 @@ Totaal: €${total.toFixed(2)}
 
               {/* LEFT */}
               <div className="flex-1 min-w-0">
-
                 <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
                   Jouw bestelling
@@ -91,7 +88,6 @@ Totaal: €${total.toFixed(2)}
                     Totaal: €{total.toFixed(2)}
                   </p>
                 )}
-
               </div>
 
               {/* RIGHT */}
@@ -100,7 +96,6 @@ Totaal: €${total.toFixed(2)}
                 <button
                   onClick={resetOrder}
                   className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
-                  aria-label="Reset bestelling"
                 >
                   <X size={16} />
                 </button>
@@ -131,45 +126,45 @@ Totaal: €${total.toFixed(2)}
       <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-40" : ""}`}>
         <div className="max-w-md mx-auto text-center space-y-6 sm:space-y-8">
 
-          <p className="text-muted-foreground text-xs sm:text-sm mb-3 sm:mb-4">
+          <p className="text-muted-foreground text-xs sm:text-sm">
             Volg ons
           </p>
 
-          <div className="flex items-center justify-center gap-4 sm:gap-5">
+          <div className="flex items-center justify-center gap-5">
 
+            {/* Snapchat */}
             <a
               href="https://www.snapchat.com/add/wingz.andthingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
-              aria-label="Snapchat"
+              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
             >
               <SnapchatIcon />
             </a>
 
+            {/* TikTok */}
             <a
-              href="https://www.tiktok.com/@wingzand.thingz"
+              href="https://www.tiktok.com/@wingz.and.thingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
-              aria-label="TikTok"
+              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
             >
               <TikTokIcon />
             </a>
 
+            {/* Instagram */}
             <a
               href="https://www.instagram.com/wingzandthingz.antwerp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
-              aria-label="Instagram"
+              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
             >
               <InstagramIcon />
             </a>
 
           </div>
 
-          <p className="text-muted-foreground text-xs pt-6 sm:pt-8 border-t border-border">
+          <p className="text-muted-foreground text-xs pt-6 border-t border-border">
             © 2026 Wingz and Thingz
           </p>
 
