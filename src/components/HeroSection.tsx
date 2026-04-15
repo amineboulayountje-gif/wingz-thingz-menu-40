@@ -5,43 +5,61 @@ const HeroSection = () => {
     <>
       {/* HEADER */}
       <header className="w-full border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
           
-          {/* Logo + Name */}
+          {/* BRAND */}
           <div className="flex items-center gap-3">
             <img
               src={logo}
               alt="Wingz and Thingz"
               className="h-10 w-auto"
             />
-            <span className="text-lg font-bold tracking-wide">
-              Wingz & Thingz
-            </span>
+            <div className="leading-tight">
+              <span className="text-lg font-bold tracking-wide block">
+                Wingz & Thingz
+              </span>
+              <span className="text-xs text-muted-foreground">
+                Antwerpen • vers bereid
+              </span>
+            </div>
           </div>
 
-          {/* WhatsApp Button */}
+          {/* CTA BUTTON */}
           <a
-            href="https://wa.me/32470111222?text=Hallo%20ik%20wil%20graag%20bestellen"
+            href="https://wa.me/32470111222?text=Hallo%20ik%20wil%20graag%20contact"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition"
           >
-            Bestellen
+            Contact
           </a>
 
+        </div>
+
+        {/* INFO BAR */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4">
+          <span>🚚 Gratis levering vanaf €20</span>        
         </div>
       </header>
 
       {/* HERO SECTION */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-20">
-        
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
-          Antwerp’s Finest Wingz & Thingz
-        </h1>
+      <section className="flex flex-col items-center justify-center text-center px-4 py-16 sm:py-20">
 
-        <p className="text-muted-foreground max-w-xl text-base sm:text-lg">
-          Premium wings, bold flavors, and the ultimate comfort food experience.
-        </p>
+        <div className="max-w-2xl w-full">
+
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
+            Antwerp’s Finest Wingz & Thingz
+          </h1>
+
+          <p className="text-muted-foreground text-sm sm:text-base mb-6">
+            🍗 Verse wings, lamb chops en unieke huisgemaakte sides
+          </p>
+
+          <p className="text-muted-foreground text-xs sm:text-sm">
+            Kies je gerecht → sides → drankje → bestel via WhatsApp
+          </p>
+
+        </div>
 
       </section>
     </>
