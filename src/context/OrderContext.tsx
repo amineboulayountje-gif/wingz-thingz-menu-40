@@ -13,10 +13,12 @@ interface OrderState {
 }
 
 interface OrderContextType {
-  order: OrderState;
+  orders: OrderState[]; // ✅ NEW
+  currentOrder: OrderState; // ✅ NEW
   setMenu: (item: MenuItem | null) => void;
   toggleSide: (side: string) => void;
   setDrink: (drink: string | null) => void;
+  addOrder: () => void; // ✅ NEW
   resetOrder: () => void;
   isComplete: boolean;
   orderSummaryText: string;
@@ -33,35 +35,69 @@ export const useOrder = () => {
 };
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
-  const [order, setOrder] = useState<OrderState>(defaultOrder);
+  // ✅ NEW STATE
+  const [orders, setOrders] = useState<OrderState[]>([]);
+  const [currentOrder, setCurrentOrder] = useState<OrderState>(defaultOrder);
 
   const setMenu = useCallback((item: MenuItem | null) => {
-    setOrder((prev) => ({ ...prev, menu: item }));
+    setCurrentOrder((prev) => ({ ...prev, menu: item }));
   }, []);
 
   const toggleSide = useCallback((side: string) => {
-    setOrder((prev) => {
+    setCurrentOrder((prev) => {
       const has = prev.sides.includes(side);
       if (has) return { ...prev, sides: prev.sides.filter((s) => s !== side) };
-      if (prev.sides.length >= 2) return prev; // max 2
+      if (prev.sides.length >= 2) return prev;
       return { ...prev, sides: [...prev.sides, side] };
     });
   }, []);
 
   const setDrink = useCallback((drink: string | null) => {
-    setOrder((prev) => ({ ...prev, drink: prev.drink === drink ? null : drink }));
+    setCurrentOrder((prev) => ({ ...prev, drink: prev.drink === drink ? null : drink }));
   }, []);
 
-  const resetOrder = useCallback(() => setOrder(defaultOrder), []);
+  // ✅ NEW FUNCTION
+  const addOrder = useCallback(() => {
+    if (!currentOrder.menu || currentOrder.sides.length !== 2 || !currentOrder.drink) return;
 
-  const isComplete = !!order.menu && order.sides.length === 2 && !!order.drink;
+    setOrders((prev) => [...prev, currentOrder]);
+    setCurrentOrder(defaultOrder);
+  }, [currentOrder]);
 
-  const orderSummaryText = order.menu
-    ? `Hoi! Ik wil graag bestellen:\n\n🍗 ${order.menu.name} (${order.menu.price})\n🥗 Bijgerechten: ${order.sides.length ? order.sides.join(", ") : "–"}\n🥤 Drankje: ${order.drink || "–"}\n\nBedankt! 🙏`
+  // ✅ UPDATED RESET
+  const resetOrder = useCallback(() => {
+    setOrders([]);
+    setCurrentOrder(defaultOrder);
+  }, []);
+
+  const isComplete =
+    !!currentOrder.menu &&
+    currentOrder.sides.length === 2 &&
+    !!currentOrder.drink;
+
+  const orderSummaryText = orders.length
+    ? `Hoi! Ik wil graag bestellen:\n\n${orders
+        .map(
+          (o, i) =>
+            `🍗 Bestelling ${i + 1}:\n${o.menu?.name} (${o.menu?.price})\n🥗 ${o.sides.join(", ")}\n🥤 ${o.drink}`
+        )
+        .join("\n\n")}\n\nBedankt! 🙏`
     : "";
 
   return (
-    <OrderContext.Provider value={{ order, setMenu, toggleSide, setDrink, resetOrder, isComplete, orderSummaryText }}>
+    <OrderContext.Provider
+      value={{
+        orders,
+        currentOrder,
+        setMenu,
+        toggleSide,
+        setDrink,
+        addOrder,
+        resetOrder,
+        isComplete,
+        orderSummaryText,
+      }}
+    >
       {children}
     </OrderContext.Provider>
   );
