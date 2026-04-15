@@ -36,7 +36,7 @@ const SidesAndDrinks = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
           {/* Sides */}
           <div id="sides" className="scroll-mt-16">
-            <div className="text-center sm:text-left mb-4 sm:mb-6">
+            <div className="text-center sm:text-left mb-3 sm:mb-4">
               <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Stap 2</p>
               <div className="flex items-center justify-center sm:justify-start gap-3 mb-1">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
@@ -103,7 +103,7 @@ const SidesAndDrinks = () => {
 
           {/* Drinks */}
           <div id="drinks" className="scroll-mt-16">
-            <div className="text-center sm:text-left mb-4 sm:mb-6">
+            <div className="text-center sm:text-left mb-3 sm:mb-4">
               <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Stap 3</p>
               <div className="flex items-center justify-center sm:justify-start gap-3 mb-1">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-primary/10 flex items-center justify-center text-primary">
