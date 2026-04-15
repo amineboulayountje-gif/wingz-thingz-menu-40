@@ -20,8 +20,16 @@ const MenuCard = ({ title, description, icon, accentColor, included, image, pric
   const isSelected = order.menu?.name === title;
 
   const handleSelect = () => {
-    setMenu(isSelected ? null : { name: title, price, image });
-  };
+  setMenu(isSelected ? null : { name: title, price, image });
+
+  // 👉 ONLY scroll when selecting (not unselecting)
+  if (!isSelected) {
+    setTimeout(() => {
+      const el = document.getElementById("sides");
+      el?.scrollIntoView({ behavior: "smooth" });
+    }, 150);
+  }
+};
 
   return (
     <button
