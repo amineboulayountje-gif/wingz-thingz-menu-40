@@ -5,7 +5,7 @@ const HeroSection = () => {
     <>
       {/* HEADER (UNCHANGED) */}
       <header className="w-full border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-0">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
           
           {/* BRAND */}
           <div className="flex items-center gap-3">
@@ -48,7 +48,7 @@ const HeroSection = () => {
       </header>
 
       {/* HERO SECTION */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-5 sm:py-5">
+      <section className="flex flex-col items-center justify-center text-center px-4 py-5 sm:py-0">
 
         <div className="max-w-2xl w-full">
 
