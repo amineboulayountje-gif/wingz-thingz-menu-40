@@ -3,10 +3,9 @@ import logo from "@/assets/logo.png";
 const HeroSection = () => {
   return (
     <>
-      {/* HEADER */}
+      {/* HEADER (UNCHANGED) */}
       <header className="w-full border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-10">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
           
           {/* BRAND */}
           <div className="flex items-center gap-3">
@@ -40,11 +39,13 @@ const HeroSection = () => {
         {/* INFO BAR */}
         <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4">
           <span>🚚 Gratis levering vanaf €20</span>
+          <span>🍗 Vers bereid op bestelling</span>
+          <span>⭐ Local favorite</span>
         </div>
       </header>
 
-      {/* HERO SECTION */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-16 sm:py-20">
+      {/* HERO SECTION (FIXED PADDING = 40px approx) */}
+      <section className="flex flex-col items-center justify-center text-center px-4 py-10 sm:py-10">
 
         <div className="max-w-2xl w-full">
 
