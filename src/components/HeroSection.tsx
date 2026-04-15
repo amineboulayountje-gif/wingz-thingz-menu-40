@@ -19,7 +19,7 @@ const HeroSection = () => {
                 Wingz & Thingz
               </span>
               <span className="text-xs text-muted-foreground">
-                Antwerpen • vers bereid
+                Antwerpen
               </span>
             </div>
           </div>
@@ -57,7 +57,7 @@ const HeroSection = () => {
           </p>
 
           <p className="text-muted-foreground text-xs sm:text-sm">
-            Kies je gerecht → sides → drankje → bestel via WhatsApp
+            Kies je proteïne → sides → drankje → bestel via WhatsApp
           </p>
 
         </div>
