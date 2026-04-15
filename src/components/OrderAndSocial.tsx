@@ -4,7 +4,7 @@ import { useOrder } from "@/context/OrderContext";
 // 👉 IMPORT YOUR ICON IMAGES
 import snapchatIcon from "@/assets/snapchat.png";
 import tiktokIcon from "@/assets/tiktok.png";
-import instagramIcon from "@/assets/instagram.png";
+import instagramIcon from "@/assets/insta.png";
 
 const OrderAndSocial = () => {
   const { order, isComplete, resetOrder } = useOrder();
