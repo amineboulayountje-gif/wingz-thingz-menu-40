@@ -1,5 +1,4 @@
 import logo from "@/assets/logo.png";
-import { ChefHat } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -42,14 +41,13 @@ const HeroSection = () => {
           <span>🚚 Gratis levering vanaf €20</span>
 
           <span className="flex items-center gap-1">
-            <ChefHat size={14} />
-            Vers bereid op bestelling
+            👨‍🍳 Vers bereid op bestelling
           </span>
 
         </div>
       </header>
 
-      {/* HERO SECTION (FIXED PADDING = 20px approx) */}
+      {/* HERO SECTION */}
       <section className="flex flex-col items-center justify-center text-center px-4 py-5 sm:py-5">
 
         <div className="max-w-2xl w-full">
