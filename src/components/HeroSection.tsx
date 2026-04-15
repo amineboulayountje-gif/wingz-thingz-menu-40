@@ -5,7 +5,7 @@ const HeroSection = () => {
     <>
       {/* HEADER (UNCHANGED) */}
       <header className="w-full border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-0">
           
           {/* BRAND */}
           <div className="flex items-center gap-3">
