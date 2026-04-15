@@ -40,12 +40,11 @@ const HeroSection = () => {
         <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4">
           <span>🚚 Gratis levering vanaf €20</span>
           <span>🍗 Vers bereid op bestelling</span>
-          <span>⭐ Local favorite</span>
         </div>
       </header>
 
-      {/* HERO SECTION (FIXED PADDING = 40px approx) */}
-      <section className="flex flex-col items-center justify-center text-center px-4 py-10 sm:py-10">
+      {/* HERO SECTION (FIXED PADDING = 20px approx) */}
+      <section className="flex flex-col items-center justify-center text-center px-4 py-5 sm:py-5">
 
         <div className="max-w-2xl w-full">
 
