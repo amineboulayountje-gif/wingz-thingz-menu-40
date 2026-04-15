@@ -1,4 +1,5 @@
 import logo from "@/assets/logo.png";
+import skyline from "@/assets/antwerpskyline.png";
 
 const HeroSection = () => {
   return (
@@ -34,10 +35,21 @@ const HeroSection = () => {
 
       {/* HERO SECTION */}
       <section className="flex flex-col items-center justify-center text-center px-4 py-20">
-        
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
-          Antwerp’s Finest Wingz & Thingz
-        </h1>
+
+        {/* SKYLINE + TITLE */}
+        <div className="flex flex-col items-center">
+
+          <img
+            src={skyline}
+            alt="Antwerp skyline"
+            className="w-full max-w-xl mb-4 opacity-90 drop-shadow-md"
+          />
+
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
+            Antwerp’s Finest Wingz & Thingz
+          </h1>
+
+        </div>
 
         <p className="text-muted-foreground max-w-xl text-base sm:text-lg">
           Premium wings, bold flavors, and the ultimate comfort food experience.
