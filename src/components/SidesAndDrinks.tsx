@@ -31,8 +31,8 @@ const SidesAndDrinks = () => {
   ];
 
   return (
-    <section className="py-10 sm:py-16 px-4 bg-secondary/30">
-      <div className="max-w-5xl mx-auto">
+<section className="py-6 sm:py-8 px-4 bg-secondary/30">
+  <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 sm:gap-10">
           {/* Sides */}
           <div id="sides" className="scroll-mt-16">
