@@ -1,19 +1,39 @@
 import { MessageCircle, X, ShoppingBag } from "lucide-react";
 import { useOrder } from "@/context/OrderContext";
 
-// 👉 IMPORT YOUR ICON IMAGES
-import snapchatIcon from "@/assets/snapchat.png";
-import tiktokIcon from "@/assets/tiktok.png";
-import instagramIcon from "@/assets/insta.png";
+/* =========================
+   ORIGINAL SOCIAL ICONS
+========================= */
+
+const SnapchatIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M12.206.793c.99 0 4.347.276 5.93 3.821..." />
+  </svg>
+);
+
+const TikTokIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25..." />
+  </svg>
+);
+
+const InstagramIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 sm:w-6 sm:h-6">
+    <path d="M12 2.163c3.204 0 3.584.012 4.85.07..." />
+  </svg>
+);
+
+/* =========================
+   MAIN COMPONENT
+========================= */
 
 const OrderAndSocial = () => {
   const { order, isComplete, resetOrder } = useOrder();
 
   const whatsappNumber = "32483691967";
- 
+
   const hasItems = !!order.menu;
 
-  // ✅ price parser ("€14,99" → 14.99)
   const parsePrice = (price?: string) => {
     if (!price) return 0;
     return parseFloat(price.replace("€", "").replace(",", "."));
@@ -56,19 +76,16 @@ Totaal: €${total.toFixed(2)}
                   Jouw bestelling
                 </p>
 
-                {/* CLEAN SUMMARY */}
                 <div className="space-y-0.5 text-xs sm:text-sm text-foreground">
                   {order.menu && <p>{order.menu.name}</p>}
                   {order.sides.length > 0 && <p>{order.sides.join(", ")}</p>}
                   {order.drink && <p>{order.drink}</p>}
                 </div>
 
-                {/* MISSING STEP MESSAGE */}
                 <p className="text-[10px] text-muted-foreground mt-1">
                   {missingStepMessage}
                 </p>
 
-                {/* TOTAL */}
                 {order.menu && (
                   <p className="text-xs font-semibold text-primary mt-1">
                     Totaal: €{total.toFixed(2)}
@@ -99,8 +116,6 @@ Totaal: €${total.toFixed(2)}
                       ? "bg-[#25D366] hover:bg-[#20bd5a] text-white hover:scale-105"
                       : "bg-muted text-muted-foreground pointer-events-none"
                   }`}
-                  aria-disabled={!isComplete}
-                  tabIndex={isComplete ? 0 : -1}
                 >
                   <MessageCircle size={18} />
                   Bestellen
@@ -122,49 +137,34 @@ Totaal: €${total.toFixed(2)}
 
           <div className="flex items-center justify-center gap-4 sm:gap-5">
 
-            {/* Snapchat */}
             <a
               href="https://www.snapchat.com/add/wingz.andthingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="Snapchat"
             >
-              <img
-                src={snapchatIcon}
-                alt="Snapchat"
-                className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-              />
+              <SnapchatIcon />
             </a>
 
-            {/* TikTok */}
             <a
               href="https://www.tiktok.com/@wingzand.thingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="TikTok"
             >
-              <img
-                src={tiktokIcon}
-                alt="TikTok"
-                className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-              />
+              <TikTokIcon />
             </a>
 
-            {/* Instagram */}
             <a
               href="https://www.instagram.com/wingzandthingz.antwerp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="Instagram"
             >
-              <img
-                src={instagramIcon}
-                alt="Instagram"
-                className="w-5 h-5 sm:w-6 sm:h-6 object-contain"
-              />
+              <InstagramIcon />
             </a>
 
           </div>
