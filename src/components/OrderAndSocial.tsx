@@ -151,7 +151,7 @@ Totaal: €${total.toFixed(2)}
               href="https://www.tiktok.com/@wingzand.thingz"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="TikTok"
             >
               <TikTokIcon />
@@ -161,7 +161,7 @@ Totaal: €${total.toFixed(2)}
               href="https://www.instagram.com/wingzandthingz.antwerp/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center text-foreground/70 hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-secondary flex items-center justify-center hover:text-primary hover:bg-secondary/80 transition-all duration-300 hover:scale-110"
               aria-label="Instagram"
             >
               <InstagramIcon />
