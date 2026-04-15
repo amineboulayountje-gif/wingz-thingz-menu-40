@@ -1,4 +1,5 @@
 import logo from "@/assets/logo.png";
+import { ChefHat } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -39,7 +40,12 @@ const HeroSection = () => {
         {/* INFO BAR */}
         <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4">
           <span>🚚 Gratis levering vanaf €20</span>
-          <span>🍗 Vers bereid op bestelling</span>
+
+          <span className="flex items-center gap-1">
+            <ChefHat size={14} />
+            Vers bereid op bestelling
+          </span>
+
         </div>
       </header>
 
