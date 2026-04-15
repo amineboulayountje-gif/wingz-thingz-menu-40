@@ -5,7 +5,8 @@ const HeroSection = () => {
     <>
       {/* HEADER */}
       <header className="w-full border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
+        
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-10">
           
           {/* BRAND */}
           <div className="flex items-center gap-3">
@@ -38,7 +39,7 @@ const HeroSection = () => {
 
         {/* INFO BAR */}
         <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4">
-          <span>🚚 Gratis levering vanaf €20</span>        
+          <span>🚚 Gratis levering vanaf €20</span>
         </div>
       </header>
 
