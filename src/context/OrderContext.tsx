@@ -19,7 +19,7 @@ interface OrderState {
 }
 
 interface OrderContextType {
-  // ✅ oude compatibiliteit
+  // ✅ backward compatibility
   order: OrderState;
 
   // ✅ nieuwe structuur
@@ -29,6 +29,9 @@ interface OrderContextType {
   setMenu: (item: MenuItem | null) => void;
   toggleSide: (side: string) => void;
   setDrink: (drink: string | null) => void;
+
+  // ✅ nieuw
+  addOrder: () => void;
 
   resetOrder: () => void;
 
@@ -63,7 +66,7 @@ export const OrderProvider = ({
   const [currentOrder, setCurrentOrder] =
     useState<OrderState>(defaultOrder);
 
-  // ✅ toekomstige multi-orders
+  // ✅ opgeslagen bestellingen
   const [orders, setOrders] = useState<OrderState[]>([]);
 
   const setMenu = useCallback((item: MenuItem | null) => {
@@ -102,8 +105,25 @@ export const OrderProvider = ({
     }));
   }, []);
 
+  // ✅ nieuwe multi-order functie
+  const addOrder = useCallback(() => {
+    if (
+      !currentOrder.menu ||
+      currentOrder.sides.length !== 2 ||
+      !currentOrder.drink
+    ) {
+      return;
+    }
+
+    setOrders((prev) => [...prev, currentOrder]);
+
+    // reset huidige bestelling
+    setCurrentOrder(defaultOrder);
+  }, [currentOrder]);
+
   const resetOrder = useCallback(() => {
     setCurrentOrder(defaultOrder);
+    setOrders([]);
   }, []);
 
   const isComplete =
@@ -111,7 +131,7 @@ export const OrderProvider = ({
     currentOrder.sides.length === 2 &&
     !!currentOrder.drink;
 
-  // ✅ voorlopig nog huidige order
+  // ✅ voorlopig nog enkel current order
   const orderSummaryText = currentOrder.menu
     ? `Hoi! Ik wil graag bestellen:
 
@@ -140,6 +160,7 @@ Bedankt! 🙏`
         toggleSide,
         setDrink,
 
+        addOrder,
         resetOrder,
 
         isComplete,
