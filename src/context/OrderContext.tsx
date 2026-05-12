@@ -19,13 +19,19 @@ interface OrderState {
 }
 
 interface OrderContextType {
-  orders: OrderState[];
+  // ✅ oude compatibiliteit
+  order: OrderState;
+
+  // ✅ nieuwe structuur
   currentOrder: OrderState;
+  orders: OrderState[];
+
   setMenu: (item: MenuItem | null) => void;
   toggleSide: (side: string) => void;
   setDrink: (drink: string | null) => void;
-  addOrder: () => void;
+
   resetOrder: () => void;
+
   isComplete: boolean;
   orderSummaryText: string;
 }
@@ -36,24 +42,29 @@ const defaultOrder: OrderState = {
   drink: null,
 };
 
-/* ✅ SAFE DEFAULT CONTEXT (prevents black screen crashes) */
-const OrderContext = createContext<OrderContextType>({
-  orders: [],
-  currentOrder: defaultOrder,
-  setMenu: () => {},
-  toggleSide: () => {},
-  setDrink: () => {},
-  addOrder: () => {},
-  resetOrder: () => {},
-  isComplete: false,
-  orderSummaryText: "",
-});
+const OrderContext = createContext<OrderContextType | null>(null);
 
-export const useOrder = () => useContext(OrderContext);
+export const useOrder = () => {
+  const ctx = useContext(OrderContext);
 
-export const OrderProvider = ({ children }: { children: ReactNode }) => {
+  if (!ctx) {
+    throw new Error("useOrder must be used within OrderProvider");
+  }
+
+  return ctx;
+};
+
+export const OrderProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
+  // ✅ actieve bestelling
+  const [currentOrder, setCurrentOrder] =
+    useState<OrderState>(defaultOrder);
+
+  // ✅ toekomstige multi-orders
   const [orders, setOrders] = useState<OrderState[]>([]);
-  const [currentOrder, setCurrentOrder] = useState<OrderState>(defaultOrder);
 
   const setMenu = useCallback((item: MenuItem | null) => {
     setCurrentOrder((prev) => ({
@@ -73,7 +84,9 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         };
       }
 
-      if (prev.sides.length >= 2) return prev;
+      if (prev.sides.length >= 2) {
+        return prev;
+      }
 
       return {
         ...prev,
@@ -89,29 +102,7 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     }));
   }, []);
 
-  /* ✅ FIXED: NO SHARED OBJECT REFERENCE */
-  const addOrder = useCallback(() => {
-    if (
-      !currentOrder.menu ||
-      currentOrder.sides.length !== 2 ||
-      !currentOrder.drink
-    )
-      return;
-
-    setOrders((prev) => [
-      ...prev,
-      {
-        menu: currentOrder.menu,
-        sides: [...currentOrder.sides],
-        drink: currentOrder.drink,
-      },
-    ]);
-
-    setCurrentOrder(defaultOrder);
-  }, [currentOrder]);
-
   const resetOrder = useCallback(() => {
-    setOrders([]);
     setCurrentOrder(defaultOrder);
   }, []);
 
@@ -120,27 +111,37 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
     currentOrder.sides.length === 2 &&
     !!currentOrder.drink;
 
-  const orderSummaryText = orders.length
-    ? `Hoi! Ik wil graag bestellen:\n\n${orders
-        .map(
-          (o, i) =>
-            `🍗 Bestelling ${i + 1}:\n${o.menu?.name} (${o.menu?.price})\n🥗 ${o.sides.join(
-              ", "
-            )}\n🥤 ${o.drink}`
-        )
-        .join("\n\n")}\n\nBedankt! 🙏`
+  // ✅ voorlopig nog huidige order
+  const orderSummaryText = currentOrder.menu
+    ? `Hoi! Ik wil graag bestellen:
+
+🍗 ${currentOrder.menu.name} (${currentOrder.menu.price})
+🥗 Bijgerechten: ${
+        currentOrder.sides.length
+          ? currentOrder.sides.join(", ")
+          : "–"
+      }
+🥤 Drankje: ${currentOrder.drink || "–"}
+
+Bedankt! 🙏`
     : "";
 
   return (
     <OrderContext.Provider
       value={{
-        orders,
+        // ✅ backward compatibility
+        order: currentOrder,
+
+        // ✅ nieuwe structuur
         currentOrder,
+        orders,
+
         setMenu,
         toggleSide,
         setDrink,
-        addOrder,
+
         resetOrder,
+
         isComplete,
         orderSummaryText,
       }}
