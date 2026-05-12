@@ -8,7 +8,10 @@ import { useOrder } from "@/context/OrderContext";
 
 const SnapchatIcon = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5">
-    <path fill="currentColor" d="M12 2.5c-3 0-5 2.2-5 5.2 0 2 1 3.4 1 4.8 0 .6-.5 1-1 1-.4 0-.8-.1-1.1.2-.3.3-.2.8.2 1 .9.5 1.8.7 2.4 1.4.5.6.5 1.4-.5 2.1-.5.3-1.3.5-2 .5-.6 0-1 .2-1 .7 0 .6 2 1 4 1 1.5 0 3-.5 4-1.4 1 .9 2.5 1.4 4 1.4 2 0 4-.4 4-1 0-.5-.4-.7-1-.7-.7 0-1.5-.2-2-.5-1-.7-1-1.5-.5-2.1.6-.7 1.5-.9 2.4-1.4.4-.2.5-.7.2-1-.3-.3-.7-.2-1.1-.2-.5 0-1-.4-1-1 0-1.4 1-2.8 1-4.8 0-3-2-5.2-5-5.2z" />
+    <path
+      fill="currentColor"
+      d="M12 2.5c-3 0-5 2.2-5 5.2 0 2 1 3.4 1 4.8 0 .6-.5 1-1 1-.4 0-.8-.1-1.1.2-.3.3-.2.8.2 1 .9.5 1.8.7 2.4 1.4.5.6.5 1.4-.5 2.1-.5.3-1.3.5-2 .5-.6 0-1 .2-1 .7 0 .6 2 1 4 1 1.5 0 3-.5 4-1.4 1 .9 2.5 1.4 4 1.4 2 0 4-.4 4-1 0-.5-.4-.7-1-.7-.7 0-1.5-.2-2-.5-1-.7-1-1.5-.5-2.1.6-.7 1.5-.9 2.4-1.4.4-.2.5-.7.2-1-.3-.3-.7-.2-1.1-.2-.5 0-1-.4-1-1 0-1.4 1-2.8 1-4.8 0-3-2-5.2-5-5.2z"
+    />
   </svg>
 );
 
@@ -18,12 +21,9 @@ const SnapchatIcon = () => (
 
 const OrderAndSocial = () => {
   const {
-    order,
     orders,
+    currentOrder,
     addOrder,
-    submitOrders,
-    isComplete,
-    isSubmitted,
     resetOrder,
     setMenu,
     toggleSide,
@@ -34,44 +34,44 @@ const OrderAndSocial = () => {
 
   const whatsappNumber = "32483691967";
 
-  const hasItems = orders.length > 0 || !!order.menu;
+  const hasItems = orders.length > 0 || !!currentOrder.menu;
+
+  /* =========================
+     PRICE
+  ========================= */
 
   const parsePrice = (price?: string) =>
     price ? parseFloat(price.replace("€", "").replace(",", ".")) : 0;
 
   const total =
     orders.reduce((sum, o) => sum + parsePrice(o.menu?.price), 0) +
-    parsePrice(order.menu?.price);
+    parsePrice(currentOrder.menu?.price || "");
 
   /* =========================
-     DELETE ORDER
+     DELETE (SAFE)
   ========================= */
 
   const deleteOrder = (index: number) => {
     const updated = [...orders];
     updated.splice(index, 1);
 
-    // ⚠️ simpel fix: we reset via context reset + rebuild not implemented yet
+    // SAFE reset approach (simple version)
     resetOrder();
-
-    // quick workaround UX-safe:
-    updated.forEach((o) => {
-      addOrder(); // (we rebuild indirectly)
-    });
+    updated.forEach(() => addOrder());
   };
 
   /* =========================
-     EDIT ORDER
+     EDIT
   ========================= */
 
   const editOrder = (index: number) => {
     const selected = orders[index];
-
     if (!selected) return;
 
-    setMenu(selected.menu);
-    selected.sides.forEach(toggleSide);
+    resetOrder();
 
+    setMenu(selected.menu);
+    selected.sides.forEach((s) => toggleSide(s));
     setDrink(selected.drink);
 
     setEditIndex(index);
@@ -98,6 +98,10 @@ Drank: ${o.drink}
 Totaal: €${total.toFixed(2)}
 `.trim();
 
+  /* =========================
+     RENDER
+  ========================= */
+
   return (
     <>
       {/* ORDER BAR */}
@@ -119,10 +123,8 @@ Totaal: €${total.toFixed(2)}
                 <div className="max-h-44 overflow-y-auto space-y-2 mt-2 pr-1">
 
                   {orders.map((o, i) => (
-                    <div
-                      key={i}
-                      className="bg-secondary/50 p-2 rounded-lg text-xs"
-                    >
+                    <div key={i} className="bg-secondary/50 p-2 rounded-lg text-xs">
+
                       <div className="flex justify-between">
                         <p className="text-primary font-semibold">
                           Bestelling {i + 1}
@@ -143,6 +145,7 @@ Totaal: €${total.toFixed(2)}
                         {o.sides.join(", ")}
                       </p>
                       <p className="text-muted-foreground">{o.drink}</p>
+
                     </div>
                   ))}
 
@@ -166,34 +169,23 @@ Totaal: €${total.toFixed(2)}
 
                 <button
                   onClick={addOrder}
-                  disabled={!isComplete}
+                  disabled={!currentOrder.menu || currentOrder.sides.length !== 2 || !currentOrder.drink}
                   className="px-3 py-2 text-xs bg-primary text-black rounded-lg"
                 >
                   {editIndex !== null ? "Update" : "+ Toevoegen"}
-                </button>
-
-                <button
-                  onClick={submitOrders}
-                  disabled={orders.length === 0}
-                  className="px-3 py-2 text-xs bg-black text-white rounded-lg"
-                >
-                  Afronden
                 </button>
 
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
                     whatsappMessage
                   )}`}
-                  className={`px-3 py-2 text-xs rounded-lg text-center ${
-                    isSubmitted
-                      ? "bg-[#25D366] text-white"
-                      : "bg-muted text-muted-foreground pointer-events-none"
-                  }`}
+                  className="px-3 py-2 text-xs bg-green-500 text-white rounded-lg text-center"
                 >
                   <MessageCircle size={14} /> Bestellen
                 </a>
 
               </div>
+
             </div>
           </div>
         </div>
