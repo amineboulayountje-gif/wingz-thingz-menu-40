@@ -45,14 +45,21 @@ const OrderAndSocial = () => {
 
   const whatsappNumber = "32483691967";
 
-  const hasItems = !!order.menu;
+  const hasItems = !!order.menu || orders.length > 0;
 
   const parsePrice = (price?: string) => {
     if (!price) return 0;
     return parseFloat(price.replace("€", "").replace(",", "."));
   };
 
-  const total = parsePrice(order.menu?.price);
+  const currentTotal = parsePrice(order.menu?.price);
+
+  const savedOrdersTotal = orders.reduce(
+    (sum, savedOrder) => sum + parsePrice(savedOrder.menu?.price),
+    0
+  );
+
+  const total = currentTotal + savedOrdersTotal;
 
   const missingStepMessage = !order.menu
     ? "Kies een gerecht"
@@ -67,9 +74,29 @@ const OrderAndSocial = () => {
   const whatsappMessage = `
 🍗 Wingz and Thingz bestelling
 
-Gerecht: ${order.menu?.name ?? ""}
+${orders
+  .map(
+    (savedOrder, index) => `
+Bestelling ${index + 1}
+
+Gerecht: ${savedOrder.menu?.name}
+Bijgerechten: ${savedOrder.sides.join(", ")}
+Drank: ${savedOrder.drink}
+`
+  )
+  .join("\n")}
+
+${
+  order.menu
+    ? `
+Huidige bestelling
+
+Gerecht: ${order.menu?.name}
 Bijgerechten: ${order.sides.join(", ")}
-Drank: ${order.drink ?? ""}
+Drank: ${order.drink}
+`
+    : ""
+}
 
 Totaal: €${total.toFixed(2)}
 `.trim();
@@ -79,41 +106,81 @@ Totaal: €${total.toFixed(2)}
       {/* STICKY ORDER BAR */}
       {hasItems && (
         <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
-          
+
           <div className="max-w-5xl mx-auto px-4 py-2 sm:py-3">
-            
+
             <div className="flex items-start gap-3">
 
               {/* LEFT */}
               <div className="flex-1 min-w-0">
 
-                <p className="text-xs font-semibold text-primary mb-1 flex items-center gap-1.5">
+                <p className="text-xs font-semibold text-primary mb-2 flex items-center gap-1.5">
                   <ShoppingBag size={14} />
                   Jouw bestelling ({orders.length})
                 </p>
 
-                <div className="space-y-0.5 text-xs sm:text-sm text-foreground">
-                  {order.menu && <p>{order.menu.name}</p>}
-                  {order.sides.length > 0 && (
-                    <p>{order.sides.join(", ")}</p>
+                {/* ORDER OVERVIEW */}
+                <div className="space-y-2 text-xs sm:text-sm text-foreground max-h-44 overflow-y-auto pr-1">
+
+                  {/* SAVED ORDERS */}
+                  {orders.map((savedOrder, index) => (
+                    <div
+                      key={index}
+                      className="bg-secondary/50 rounded-lg px-3 py-2 border border-border"
+                    >
+                      <p className="font-semibold text-primary mb-1">
+                        Bestelling {index + 1}
+                      </p>
+
+                      <p>{savedOrder.menu?.name}</p>
+
+                      <p className="text-muted-foreground">
+                        {savedOrder.sides.join(", ")}
+                      </p>
+
+                      <p className="text-muted-foreground">
+                        {savedOrder.drink}
+                      </p>
+                    </div>
+                  ))}
+
+                  {/* CURRENT ORDER */}
+                  {order.menu && (
+                    <div className="border border-dashed border-primary/40 rounded-lg px-3 py-2">
+                      <p className="font-semibold text-primary mb-1">
+                        Huidige bestelling
+                      </p>
+
+                      <p>{order.menu.name}</p>
+
+                      {order.sides.length > 0 && (
+                        <p className="text-muted-foreground">
+                          {order.sides.join(", ")}
+                        </p>
+                      )}
+
+                      {order.drink && (
+                        <p className="text-muted-foreground">
+                          {order.drink}
+                        </p>
+                      )}
+                    </div>
                   )}
-                  {order.drink && <p>{order.drink}</p>}
+
                 </div>
 
-                <p className="text-[10px] text-muted-foreground mt-1">
+                <p className="text-[10px] text-muted-foreground mt-2">
                   {missingStepMessage}
                 </p>
 
-                {order.menu && (
-                  <p className="text-xs font-semibold text-primary mt-1">
-                    Totaal: €{total.toFixed(2)}
-                  </p>
-                )}
+                <p className="text-xs font-semibold text-primary mt-1">
+                  Totaal: €{total.toFixed(2)}
+                </p>
 
               </div>
 
               {/* RIGHT */}
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex flex-col items-center gap-2 shrink-0">
 
                 {/* RESET */}
                 <button
@@ -126,7 +193,7 @@ Totaal: €${total.toFixed(2)}
                 {/* ADD ORDER */}
                 <button
                   onClick={addOrder}
-                  className={`inline-flex items-center gap-2 font-semibold text-sm px-4 py-2 rounded-lg transition-all duration-300 ${
+                  className={`inline-flex items-center justify-center font-semibold text-sm px-4 py-2 rounded-lg transition-all duration-300 w-full ${
                     isComplete
                       ? "bg-primary text-black hover:scale-105"
                       : "bg-muted text-muted-foreground pointer-events-none"
@@ -142,8 +209,8 @@ Totaal: €${total.toFixed(2)}
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`inline-flex items-center gap-2 font-semibold text-sm px-5 py-2.5 rounded-lg transition-all duration-300 shadow-lg ${
-                    isComplete
+                  className={`inline-flex items-center justify-center gap-2 font-semibold text-sm px-4 py-2 rounded-lg transition-all duration-300 shadow-lg w-full ${
+                    orders.length > 0
                       ? "bg-[#25D366] hover:bg-[#20bd5a] text-white hover:scale-105"
                       : "bg-muted text-muted-foreground pointer-events-none"
                   }`}
@@ -159,8 +226,8 @@ Totaal: €${total.toFixed(2)}
       )}
 
       {/* SOCIAL SECTION */}
-      <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-40" : ""}`}>
-        
+      <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-56" : ""}`}>
+
         <div className="max-w-md mx-auto text-center space-y-6 sm:space-y-8">
 
           <p className="text-muted-foreground text-xs sm:text-sm">
