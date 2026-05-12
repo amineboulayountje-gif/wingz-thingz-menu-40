@@ -3,10 +3,10 @@ import logo from "@/assets/logo.png";
 const HeroSection = () => {
   return (
     <>
-      {/* HEADER (UNCHANGED) */}
+      {/* HEADER */}
       <header className="w-full border-b bg-background/80 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-4">
-          
+
           {/* BRAND */}
           <div className="flex items-center gap-3">
             <img
@@ -14,6 +14,7 @@ const HeroSection = () => {
               alt="Wingz and Thingz"
               className="h-10 w-auto"
             />
+
             <div className="leading-tight">
               <span className="text-lg font-bold tracking-wide block">
                 Wingz & Thingz
@@ -24,31 +25,34 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* CTA BUTTON */}
+          {/* CTA */}
           <a
-            href="https://wa.me/32470111222?text=Hallo%20ik%20wil%20graag%20contact"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#menu"
             className="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition"
           >
-            Contact
+            Bestel nu
           </a>
 
         </div>
 
         {/* INFO BAR */}
-        <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4">
+        <div className="flex flex-wrap items-center justify-center gap-4 mt-3 text-xs text-muted-foreground pb-3 px-4 text-center">
+
           <span>🚚 Gratis levering vanaf €20</span>
 
           <span className="flex items-center gap-1">
             👨‍🍳 Vers bereid op bestelling
           </span>
 
+          <span>🔥 Custom wing combos mogelijk</span>
+
         </div>
       </header>
 
-      {/* HERO SECTION */}
-<section className="flex flex-col items-center justify-center text-center px-4 pt-5 pb-2 sm:pt-6 sm:pb-3">  <div className="max-w-2xl w-full">
+      {/* HERO */}
+      <section className="flex flex-col items-center justify-center text-center px-4 pt-8 pb-6 sm:pt-10 sm:pb-8">
+
+        <div className="max-w-2xl w-full">
 
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
             Antwerp’s Finest Wingz & Thingz
@@ -57,6 +61,14 @@ const HeroSection = () => {
           <p className="text-muted-foreground text-sm sm:text-base mb-6">
             🍗 Verse wings, lamb chops en unieke huisgemaakte sides
           </p>
+
+          {/* CTA scroll helper */}
+          <a
+            href="#menu"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary/90 transition"
+          >
+            Bekijk menu
+          </a>
 
         </div>
 
