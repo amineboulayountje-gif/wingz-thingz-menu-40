@@ -15,21 +15,29 @@ interface MenuItemData {
   price: string;
 }
 
-const MenuCard = ({ title, description, icon, accentColor, included, image, price }: MenuItemData) => {
-  const { order, setMenu } = useOrder();
-  const isSelected = order.menu?.name === title;
+const MenuCard = ({
+  title,
+  description,
+  icon,
+  accentColor,
+  included,
+  image,
+  price,
+}: MenuItemData) => {
+  const { currentOrder, setMenu } = useOrder();
+
+  const isSelected = currentOrder?.menu?.name === title;
 
   const handleSelect = () => {
-  setMenu(isSelected ? null : { name: title, price, image });
+    setMenu(isSelected ? null : { name: title, price, image });
 
-  // 👉 ONLY scroll when selecting (not unselecting)
-  if (!isSelected) {
-    setTimeout(() => {
-      const el = document.getElementById("sides");
-      el?.scrollIntoView({ behavior: "smooth" });
-    }, 150);
-  }
-};
+    if (!isSelected) {
+      setTimeout(() => {
+        const el = document.getElementById("sides");
+        el?.scrollIntoView({ behavior: "smooth" });
+      }, 150);
+    }
+  };
 
   return (
     <button
@@ -46,47 +54,64 @@ const MenuCard = ({ title, description, icon, accentColor, included, image, pric
           <Check size={16} className="text-primary-foreground" />
         </div>
       )}
+
       <div
         className="absolute top-0 left-0 right-0 h-1 z-10"
         style={{ backgroundColor: accentColor }}
       />
+
       <div className="h-36 sm:h-44 overflow-hidden">
         <img
           src={image}
           alt={title}
           loading="lazy"
-          width={512}
-          height={512}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
       </div>
+
       <div className="p-4 sm:p-5">
         <div className="flex items-center justify-between mb-2">
           <div className="flex items-center gap-3">
             <div
               className="w-8 h-8 sm:w-9 sm:h-9 rounded-md flex items-center justify-center shrink-0"
-              style={{ backgroundColor: accentColor + "22", color: accentColor }}
+              style={{
+                backgroundColor: accentColor + "22",
+                color: accentColor,
+              }}
             >
               {icon}
             </div>
             <h3 className="text-xl sm:text-2xl font-display">{title}</h3>
           </div>
-          <span className="text-lg sm:text-xl font-display text-primary">{price}</span>
+
+          <span className="text-lg sm:text-xl font-display text-primary">
+            {price}
+          </span>
         </div>
-        <p className="text-muted-foreground mb-3 font-body text-xs sm:text-sm">{description}</p>
+
+        <p className="text-muted-foreground mb-3 font-body text-xs sm:text-sm">
+          {description}
+        </p>
+
         <div className="text-xs text-muted-foreground border-t border-border pt-2 sm:pt-3">
-          <span className="text-foreground/70 font-semibold">Inclusief:</span> {included}
+          <span className="text-foreground/70 font-semibold">Inclusief:</span>{" "}
+          {included}
         </div>
       </div>
     </button>
   );
 };
 
+/* =========================
+   MENU SECTION
+========================= */
+
 export const MenuSection = () => {
   const menus: MenuItemData[] = [
     {
       title: "Classic Wings",
-      description: "Gouden krokante wings met onze kenmerkende klassieke kruiden. Een tijdloze favoriet.",
+      description:
+        "Gouden krokante wings met onze kenmerkende klassieke kruiden. Een tijdloze favoriet.",
       icon: <Drumstick size={20} />,
       accentColor: "hsl(30, 95%, 55%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
@@ -95,7 +120,8 @@ export const MenuSection = () => {
     },
     {
       title: "Honey Wings",
-      description: "Zoete en plakkerige honing-geglazuurde wings met een perfect gekaramelliseerde afwerking.",
+      description:
+        "Zoete en plakkerige honing-geglazuurde wings met een perfect gekaramelliseerde afwerking.",
       icon: <Droplets size={20} />,
       accentColor: "hsl(45, 95%, 50%)",
       included: "Wings + 2 Bijgerechten + 1 Drankje",
@@ -113,7 +139,8 @@ export const MenuSection = () => {
     },
     {
       title: "Lamb Chops",
-      description: "Sappige, perfect gekruide lamskoteletten op de grill bereid.",
+      description:
+        "Sappige, perfect gekruide lamskoteletten op de grill bereid.",
       icon: <Drumstick size={20} />,
       accentColor: "hsl(15, 40%, 45%)",
       included: "Lamskoteletten + 2 Bijgerechten + 1 Drankje",
@@ -123,10 +150,13 @@ export const MenuSection = () => {
   ];
 
   return (
-<section id="menu" className="py-6 sm:py-8 px-4 scroll-mt-24">
-  <div className="max-w-5xl mx-auto">
+    <section id="menu" className="py-6 sm:py-8 px-4 scroll-mt-24">
+      <div className="max-w-5xl mx-auto">
+
         <div className="text-center mb-6 sm:mb-10">
-          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">Stap 1</p>
+          <p className="text-xs font-semibold tracking-widest uppercase text-primary mb-2">
+            Stap 1
+          </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display mb-1 sm:mb-2 text-gradient">
             Kies je gerecht
           </h2>
@@ -134,11 +164,13 @@ export const MenuSection = () => {
             Elke combo komt met 2 bijgerechten & een drankje
           </p>
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           {menus.map((menu) => (
             <MenuCard key={menu.title} {...menu} />
           ))}
         </div>
+
       </div>
     </section>
   );
