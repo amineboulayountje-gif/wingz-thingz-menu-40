@@ -2,17 +2,17 @@ import { MessageCircle, X, ShoppingBag } from "lucide-react";
 import { useOrder } from "@/context/OrderContext";
 
 /* =========================
-   CLEAN CUSTOM ICONS
+   ICONS
 ========================= */
 
 const SnapchatIcon = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5">
     <path
       fill="currentColor"
-      d="M12 2.5c-3 0-5 2.2-5 5.2 0 2 1 3.4 1 4.8 0 .6-.5 1-1 1-.4 0-.8-.1-1.1.2-.3.3-.2.8.2 1 
-      .9.5 1.8.7 2.4 1.4.5.6.5 1.4-.5 2.1-.5.3-1.3.5-2 .5-.6 0-1 .2-1 .7 0 .6 2 1 4 1 
-      1.5 0 3-.5 4-1.4 1 .9 2.5 1.4 4 1.4 2 0 4-.4 4-1 0-.5-.4-.7-1-.7-.7 0-1.5-.2-2-.5-1-.7-1-1.5-.5-2.1 
-      .6-.7 1.5-.9 2.4-1.4.4-.2.5-.7.2-1-.3-.3-.7-.2-1.1-.2-.5 0-1-.4-1-1 0-1.4 1-2.8 1-4.8 
+      d="M12 2.5c-3 0-5 2.2-5 5.2 0 2 1 3.4 1 4.8 0 .6-.5 1-1 1-.4 0-.8-.1-1.1.2-.3.3-.2.8.2 1
+      .9.5 1.8.7 2.4 1.4.5.6.5 1.4-.5 2.1-.5.3-1.3.5-2 .5-.6 0-1 .2-1 .7 0 .6 2 1 4 1
+      1.5 0 3-.5 4-1.4 1 .9 2.5 1.4 4 1.4 2 0 4-.4 4-1 0-.5-.4-.7-1-.7-.7 0-1.5-.2-2-.5-1-.7-1-1.5-.5-2.1
+      .6-.7 1.5-.9 2.4-1.4.4-.2.5-.7.2-1-.3-.3-.7-.2-1.1-.2-.5 0-1-.4-1-1 0-1.4 1-2.8 1-4.8
       0-3-2-5.2-5-5.2z"
     />
   </svg>
@@ -31,7 +31,7 @@ const InstagramIcon = () => (
 );
 
 /* =========================
-   MAIN COMPONENT
+   COMPONENT
 ========================= */
 
 const OrderAndSocial = () => {
@@ -39,138 +39,101 @@ const OrderAndSocial = () => {
     order,
     orders,
     addOrder,
+    submitOrders,
     isComplete,
+    isSubmitted,
     resetOrder,
   } = useOrder();
 
   const whatsappNumber = "32483691967";
 
-  const hasItems = !!order.menu || orders.length > 0;
+  const hasItems = orders.length > 0 || !!order.menu;
 
   const parsePrice = (price?: string) => {
     if (!price) return 0;
     return parseFloat(price.replace("€", "").replace(",", "."));
   };
 
-  const currentTotal = parsePrice(order.menu?.price);
-
-  const savedOrdersTotal = orders.reduce(
-    (sum, savedOrder) => sum + parsePrice(savedOrder.menu?.price),
-    0
-  );
-
-  const total = currentTotal + savedOrdersTotal;
-
-  const missingStepMessage = !order.menu
-    ? "Kies een gerecht"
-    : order.sides.length < 2
-    ? `Kies nog ${2 - order.sides.length} bijgerecht${
-        order.sides.length === 1 ? "" : "en"
-      }`
-    : !order.drink
-    ? "Kies een drankje"
-    : "";
+  const total =
+    orders.reduce(
+      (sum, o) => sum + parsePrice(o.menu?.price),
+      0
+    ) + parsePrice(order.menu?.price);
 
   const whatsappMessage = `
 🍗 Wingz and Thingz bestelling
 
 ${orders
   .map(
-    (savedOrder, index) => `
-Bestelling ${index + 1}
-
-Gerecht: ${savedOrder.menu?.name}
-Bijgerechten: ${savedOrder.sides.join(", ")}
-Drank: ${savedOrder.drink}
+    (o, i) => `
+Bestelling ${i + 1}
+Gerecht: ${o.menu?.name}
+Bijgerechten: ${o.sides.join(", ")}
+Drank: ${o.drink}
 `
   )
   .join("\n")}
 
-${
-  order.menu
-    ? `
-Huidige bestelling
-
+${order.menu ? `
+HUIDIGE BESTELLING
 Gerecht: ${order.menu?.name}
 Bijgerechten: ${order.sides.join(", ")}
 Drank: ${order.drink}
-`
-    : ""
-}
+` : ""}
 
 Totaal: €${total.toFixed(2)}
 `.trim();
 
   return (
     <>
-      {/* STICKY ORDER BAR */}
+      {/* ORDER BAR */}
       {hasItems && (
-        <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border shadow-lg pb-[env(safe-area-inset-bottom)]">
+        <div className="fixed inset-x-0 bottom-0 z-50 bg-card/95 backdrop-blur-md border-t border-border pb-[env(safe-area-inset-bottom)]">
 
-          <div className="max-w-5xl mx-auto px-4 py-2 sm:py-3">
+          <div className="max-w-5xl mx-auto px-4 py-3">
 
             <div className="flex items-start gap-3">
 
               {/* LEFT */}
-              <div className="flex-1 min-w-0">
+              <div className="flex-1">
 
-                <p className="text-xs font-semibold text-primary mb-2 flex items-center gap-1.5">
+                <p className="text-xs font-semibold text-primary flex items-center gap-1.5 mb-2">
                   <ShoppingBag size={14} />
                   Jouw bestelling ({orders.length})
                 </p>
 
-                {/* ORDER OVERVIEW */}
-                <div className="space-y-2 text-xs sm:text-sm text-foreground max-h-44 overflow-y-auto pr-1">
+                <div className="text-xs text-foreground space-y-2 max-h-40 overflow-y-auto pr-1">
 
-                  {/* SAVED ORDERS */}
-                  {orders.map((savedOrder, index) => (
-                    <div
-                      key={index}
-                      className="bg-secondary/50 rounded-lg px-3 py-2 border border-border"
-                    >
-                      <p className="font-semibold text-primary mb-1">
-                        Bestelling {index + 1}
+                  {orders.map((o, i) => (
+                    <div key={i} className="bg-secondary/50 p-2 rounded-lg">
+                      <p className="text-primary font-semibold">
+                        Bestelling {i + 1}
                       </p>
-
-                      <p>{savedOrder.menu?.name}</p>
-
-                      <p className="text-muted-foreground">
-                        {savedOrder.sides.join(", ")}
-                      </p>
-
-                      <p className="text-muted-foreground">
-                        {savedOrder.drink}
-                      </p>
+                      <p>{o.menu?.name}</p>
+                      <p className="text-muted-foreground">{o.sides.join(", ")}</p>
+                      <p className="text-muted-foreground">{o.drink}</p>
                     </div>
                   ))}
 
-                  {/* CURRENT ORDER */}
                   {order.menu && (
-                    <div className="border border-dashed border-primary/40 rounded-lg px-3 py-2">
-                      <p className="font-semibold text-primary mb-1">
+                    <div className="border border-dashed border-primary/40 p-2 rounded-lg">
+                      <p className="text-primary font-semibold">
                         Huidige bestelling
                       </p>
-
                       <p>{order.menu.name}</p>
-
-                      {order.sides.length > 0 && (
-                        <p className="text-muted-foreground">
-                          {order.sides.join(", ")}
-                        </p>
-                      )}
-
-                      {order.drink && (
-                        <p className="text-muted-foreground">
-                          {order.drink}
-                        </p>
-                      )}
+                      <p className="text-muted-foreground">{order.sides.join(", ")}</p>
+                      <p className="text-muted-foreground">{order.drink}</p>
                     </div>
                   )}
 
                 </div>
 
-                <p className="text-[10px] text-muted-foreground mt-2">
-                  {missingStepMessage}
+                <p className="text-xs text-muted-foreground mt-2">
+                  {isSubmitted
+                    ? "Bestelling afgerond"
+                    : !order.menu
+                    ? "Kies een gerecht"
+                    : ""}
                 </p>
 
                 <p className="text-xs font-semibold text-primary mt-1">
@@ -180,42 +143,52 @@ Totaal: €${total.toFixed(2)}
               </div>
 
               {/* RIGHT */}
-              <div className="flex flex-col items-center gap-2 shrink-0">
+              <div className="flex flex-col gap-2">
 
-                {/* RESET */}
                 <button
                   onClick={resetOrder}
-                  className="w-8 h-8 rounded-full bg-secondary flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  className="w-8 h-8 bg-secondary rounded-full flex items-center justify-center"
                 >
                   <X size={16} />
                 </button>
 
                 {/* ADD ORDER */}
-                <button
-                  onClick={addOrder}
-                  className={`inline-flex items-center justify-center font-semibold text-sm px-4 py-2 rounded-lg transition-all duration-300 w-full ${
-                    isComplete
-                      ? "bg-primary text-black hover:scale-105"
-                      : "bg-muted text-muted-foreground pointer-events-none"
-                  }`}
-                >
-                  + Voeg toe
-                </button>
+                {!isSubmitted && (
+                  <button
+                    onClick={addOrder}
+                    className={`px-3 py-2 text-sm rounded-lg font-semibold ${
+                      isComplete
+                        ? "bg-primary text-black"
+                        : "bg-muted text-muted-foreground"
+                    }`}
+                  >
+                    + Voeg toe
+                  </button>
+                )}
+
+                {/* SUBMIT */}
+                {!isSubmitted && (
+                  <button
+                    onClick={submitOrders}
+                    disabled={orders.length === 0}
+                    className="px-3 py-2 text-sm rounded-lg bg-black text-white"
+                  >
+                    Afronden
+                  </button>
+                )}
 
                 {/* WHATSAPP */}
                 <a
                   href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
                     whatsappMessage
                   )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`inline-flex items-center justify-center gap-2 font-semibold text-sm px-4 py-2 rounded-lg transition-all duration-300 shadow-lg w-full ${
-                    orders.length > 0
-                      ? "bg-[#25D366] hover:bg-[#20bd5a] text-white hover:scale-105"
+                  className={`px-3 py-2 text-sm rounded-lg text-center ${
+                    isSubmitted
+                      ? "bg-[#25D366] text-white"
                       : "bg-muted text-muted-foreground pointer-events-none"
                   }`}
                 >
-                  <MessageCircle size={18} />
+                  <MessageCircle size={16} className="inline mr-1" />
                   Bestellen
                 </a>
 
@@ -225,50 +198,29 @@ Totaal: €${total.toFixed(2)}
         </div>
       )}
 
-      {/* SOCIAL SECTION */}
-      <section className={`py-10 sm:py-16 px-4 ${hasItems ? "pb-56" : ""}`}>
+      {/* SOCIAL */}
+      <section className="py-10 px-4 pb-40">
+        <div className="text-center space-y-4">
 
-        <div className="max-w-md mx-auto text-center space-y-6 sm:space-y-8">
+          <p className="text-muted-foreground text-sm">Volg ons</p>
 
-          <p className="text-muted-foreground text-xs sm:text-sm">
-            Volg ons
-          </p>
+          <div className="flex justify-center gap-5">
 
-          <div className="flex items-center justify-center gap-5">
-
-            {/* Snapchat */}
-            <a
-              href="https://www.snapchat.com/add/wingz.andthingz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
-            >
+            <a href="#" className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
               <SnapchatIcon />
             </a>
 
-            {/* TikTok */}
-            <a
-              href="https://www.tiktok.com/@wingz.and.thingz"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
-            >
+            <a href="#" className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
               <TikTokIcon />
             </a>
 
-            {/* Instagram */}
-            <a
-              href="https://www.instagram.com/wingzandthingz.antwerp/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-12 h-12 rounded-full bg-secondary flex items-center justify-center text-foreground hover:text-primary hover:scale-110 transition-all duration-300 shadow-sm hover:shadow-lg"
-            >
+            <a href="#" className="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
               <InstagramIcon />
             </a>
 
           </div>
 
-          <p className="text-muted-foreground text-xs pt-6 border-t border-border">
+          <p className="text-xs text-muted-foreground pt-6 border-t border-border">
             © 2026 Wingz and Thingz
           </p>
 
