@@ -44,8 +44,6 @@ const HeroSection = () => {
             👨‍🍳 Vers bereid op bestelling
           </span>
 
-          <span>🔥 Custom wing combos mogelijk</span>
-
         </div>
       </header>
 
@@ -61,14 +59,6 @@ const HeroSection = () => {
           <p className="text-muted-foreground text-sm sm:text-base mb-6">
             🍗 Verse wings, lamb chops en unieke huisgemaakte sides
           </p>
-
-          {/* CTA scroll helper */}
-          <a
-            href="#menu"
-            className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-white font-semibold hover:bg-primary/90 transition"
-          >
-            Bekijk menu
-          </a>
 
         </div>
 
