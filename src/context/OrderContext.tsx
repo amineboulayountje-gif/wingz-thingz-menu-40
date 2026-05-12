@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useCallback,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
 export interface MenuItem {
   name: string;
@@ -12,7 +6,7 @@ export interface MenuItem {
   image: string;
 }
 
-interface OrderState {
+export interface OrderState {
   menu: MenuItem | null;
   sides: string[];
   drink: string | null;
@@ -27,14 +21,7 @@ interface OrderContextType {
   setDrink: (drink: string | null) => void;
 
   addOrder: () => void;
-  submitOrders: () => void;
-
   resetOrder: () => void;
-
-  isComplete: boolean;
-  isSubmitted: boolean;
-
-  orderSummaryText: string;
 }
 
 const defaultOrder: OrderState = {
@@ -43,34 +30,31 @@ const defaultOrder: OrderState = {
   drink: null,
 };
 
-const OrderContext = createContext<OrderContextType | null>(null);
+const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const useOrder = () => {
   const ctx = useContext(OrderContext);
-  if (!ctx) throw new Error("useOrder must be used within OrderProvider");
+
+  if (!ctx) {
+    throw new Error("useOrder must be used inside OrderProvider");
+  }
+
   return ctx;
 };
 
 export const OrderProvider = ({ children }: { children: ReactNode }) => {
   const [orders, setOrders] = useState<OrderState[]>([]);
-  const [currentOrder, setCurrentOrder] =
-    useState<OrderState>(defaultOrder);
+  const [currentOrder, setCurrentOrder] = useState<OrderState>(defaultOrder);
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  /* =========================
-     CURRENT ORDER ACTIONS
-  ========================= */
-
-  const setMenu = useCallback((item: MenuItem | null) => {
+  const setMenu = (item: MenuItem | null) => {
     setCurrentOrder((prev) => ({ ...prev, menu: item }));
-  }, []);
+  };
 
-  const toggleSide = useCallback((side: string) => {
+  const toggleSide = (side: string) => {
     setCurrentOrder((prev) => {
-      const has = prev.sides.includes(side);
+      const exists = prev.sides.includes(side);
 
-      if (has) {
+      if (exists) {
         return {
           ...prev,
           sides: prev.sides.filter((s) => s !== side),
@@ -84,92 +68,40 @@ export const OrderProvider = ({ children }: { children: ReactNode }) => {
         sides: [...prev.sides, side],
       };
     });
-  }, []);
+  };
 
-  const setDrink = useCallback((drink: string | null) => {
+  const setDrink = (drink: string | null) => {
     setCurrentOrder((prev) => ({
       ...prev,
-      drink: prev.drink === drink ? null : drink,
+      drink,
     }));
-  }, []);
+  };
 
-  /* =========================
-     ADD ORDER (MULTI CART)
-  ========================= */
-
-  const addOrder = useCallback(() => {
-    if (
-      !currentOrder.menu ||
-      currentOrder.sides.length !== 2 ||
-      !currentOrder.drink
-    )
+  const addOrder = () => {
+    if (!currentOrder.menu || currentOrder.sides.length !== 2 || !currentOrder.drink) {
       return;
+    }
 
     setOrders((prev) => [...prev, currentOrder]);
+
     setCurrentOrder(defaultOrder);
-  }, [currentOrder]);
+  };
 
-  /* =========================
-     SUBMIT / CHECKOUT
-  ========================= */
-
-  const submitOrders = useCallback(() => {
-    setIsSubmitted(true);
-  }, []);
-
-  /* =========================
-     RESET EVERYTHING
-  ========================= */
-
-  const resetOrder = useCallback(() => {
+  const resetOrder = () => {
     setOrders([]);
     setCurrentOrder(defaultOrder);
-    setIsSubmitted(false);
-  }, []);
-
-  /* =========================
-     STATUS
-  ========================= */
-
-  const isComplete =
-    !!currentOrder.menu &&
-    currentOrder.sides.length === 2 &&
-    !!currentOrder.drink;
-
-  /* =========================
-     SUMMARY TEXT (WHATSAPP)
-  ========================= */
-
-  const orderSummaryText = orders.length
-    ? `Hoi! Ik wil graag bestellen:\n\n${orders
-        .map(
-          (o, i) =>
-            `🍗 Bestelling ${i + 1}:\n${o.menu?.name} (${
-              o.menu?.price
-            })\n🥗 ${o.sides.join(", ")}\n🥤 ${o.drink}`
-        )
-        .join("\n\n")}\n\nBedankt! 🙏`
-    : "";
+  };
 
   return (
     <OrderContext.Provider
       value={{
         orders,
         currentOrder,
-
         setMenu,
         toggleSide,
         setDrink,
-
         addOrder,
-        submitOrders,
-
         resetOrder,
-
-        isComplete,
-        isSubmitted,
-
-        orderSummaryText,
       }}
     >
       {children}
