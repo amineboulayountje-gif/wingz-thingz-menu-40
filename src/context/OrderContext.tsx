@@ -19,23 +19,21 @@ interface OrderState {
 }
 
 interface OrderContextType {
-  // ✅ backward compatibility
-  order: OrderState;
-
-  // ✅ nieuwe structuur
-  currentOrder: OrderState;
   orders: OrderState[];
+  currentOrder: OrderState;
 
   setMenu: (item: MenuItem | null) => void;
   toggleSide: (side: string) => void;
   setDrink: (drink: string | null) => void;
 
-  // ✅ nieuw
   addOrder: () => void;
+  submitOrders: () => void;
 
   resetOrder: () => void;
 
   isComplete: boolean;
+  isSubmitted: boolean;
+
   orderSummaryText: string;
 }
 
@@ -49,31 +47,23 @@ const OrderContext = createContext<OrderContextType | null>(null);
 
 export const useOrder = () => {
   const ctx = useContext(OrderContext);
-
-  if (!ctx) {
-    throw new Error("useOrder must be used within OrderProvider");
-  }
-
+  if (!ctx) throw new Error("useOrder must be used within OrderProvider");
   return ctx;
 };
 
-export const OrderProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => {
-  // ✅ actieve bestelling
+export const OrderProvider = ({ children }: { children: ReactNode }) => {
+  const [orders, setOrders] = useState<OrderState[]>([]);
   const [currentOrder, setCurrentOrder] =
     useState<OrderState>(defaultOrder);
 
-  // ✅ opgeslagen bestellingen
-  const [orders, setOrders] = useState<OrderState[]>([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  /* =========================
+     CURRENT ORDER ACTIONS
+  ========================= */
 
   const setMenu = useCallback((item: MenuItem | null) => {
-    setCurrentOrder((prev) => ({
-      ...prev,
-      menu: item,
-    }));
+    setCurrentOrder((prev) => ({ ...prev, menu: item }));
   }, []);
 
   const toggleSide = useCallback((side: string) => {
@@ -87,9 +77,7 @@ export const OrderProvider = ({
         };
       }
 
-      if (prev.sides.length >= 2) {
-        return prev;
-      }
+      if (prev.sides.length >= 2) return prev;
 
       return {
         ...prev,
@@ -105,65 +93,82 @@ export const OrderProvider = ({
     }));
   }, []);
 
-  // ✅ nieuwe multi-order functie
+  /* =========================
+     ADD ORDER (MULTI CART)
+  ========================= */
+
   const addOrder = useCallback(() => {
     if (
       !currentOrder.menu ||
       currentOrder.sides.length !== 2 ||
       !currentOrder.drink
-    ) {
+    )
       return;
-    }
 
     setOrders((prev) => [...prev, currentOrder]);
-
-    // reset huidige bestelling
     setCurrentOrder(defaultOrder);
   }, [currentOrder]);
 
-  const resetOrder = useCallback(() => {
-    setCurrentOrder(defaultOrder);
-    setOrders([]);
+  /* =========================
+     SUBMIT / CHECKOUT
+  ========================= */
+
+  const submitOrders = useCallback(() => {
+    setIsSubmitted(true);
   }, []);
+
+  /* =========================
+     RESET EVERYTHING
+  ========================= */
+
+  const resetOrder = useCallback(() => {
+    setOrders([]);
+    setCurrentOrder(defaultOrder);
+    setIsSubmitted(false);
+  }, []);
+
+  /* =========================
+     STATUS
+  ========================= */
 
   const isComplete =
     !!currentOrder.menu &&
     currentOrder.sides.length === 2 &&
     !!currentOrder.drink;
 
-  // ✅ voorlopig nog enkel current order
-  const orderSummaryText = currentOrder.menu
-    ? `Hoi! Ik wil graag bestellen:
+  /* =========================
+     SUMMARY TEXT (WHATSAPP)
+  ========================= */
 
-🍗 ${currentOrder.menu.name} (${currentOrder.menu.price})
-🥗 Bijgerechten: ${
-        currentOrder.sides.length
-          ? currentOrder.sides.join(", ")
-          : "–"
-      }
-🥤 Drankje: ${currentOrder.drink || "–"}
-
-Bedankt! 🙏`
+  const orderSummaryText = orders.length
+    ? `Hoi! Ik wil graag bestellen:\n\n${orders
+        .map(
+          (o, i) =>
+            `🍗 Bestelling ${i + 1}:\n${o.menu?.name} (${
+              o.menu?.price
+            })\n🥗 ${o.sides.join(", ")}\n🥤 ${o.drink}`
+        )
+        .join("\n\n")}\n\nBedankt! 🙏`
     : "";
 
   return (
     <OrderContext.Provider
       value={{
-        // ✅ backward compatibility
-        order: currentOrder,
-
-        // ✅ nieuwe structuur
-        currentOrder,
         orders,
+        currentOrder,
 
         setMenu,
         toggleSide,
         setDrink,
 
         addOrder,
+        submitOrders,
+
         resetOrder,
 
         isComplete,
+        isSubmitted,
+
         orderSummaryText,
       }}
     >
