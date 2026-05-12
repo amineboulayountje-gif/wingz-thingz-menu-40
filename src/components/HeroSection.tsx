@@ -47,22 +47,22 @@ const HeroSection = () => {
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="flex flex-col items-center justify-center text-center px-4 pt-8 pb-6 sm:pt-10 sm:pb-8">
+{/* HERO SECTION */}
+<section className="flex flex-col items-center justify-center text-center px-4 py-10 sm:py-14">
 
-        <div className="max-w-2xl w-full">
+  <div className="max-w-2xl w-full">
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Antwerp’s Finest Wingz & Thingz
-          </h1>
+    <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6">
+      Antwerp’s Finest Wingz & Thingz
+    </h1>
 
-          <p className="text-muted-foreground text-sm sm:text-base mb-6">
-            🍗 Verse wings, lamb chops en unieke huisgemaakte sides
-          </p>
+    <p className="text-muted-foreground text-sm sm:text-base mb-10">
+      🍗 Verse wings, lamb chops en unieke huisgemaakte sides
+    </p>
 
-        </div>
+  </div>
 
-      </section>
+</section>
     </>
   );
 };
